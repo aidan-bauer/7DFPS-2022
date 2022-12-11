@@ -8,6 +8,7 @@ public class GunData : ScriptableObject
     [Header("Gameplay parameters")]
     public int damage;
     public float fireRate;
+    public int ammoBeforeReload;
 
     [Header("Sounds")]
     public AudioClip fireSoundEffect;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,12 +7,14 @@ public class GunTester : MonoBehaviour
 {
     public GameObject gameObject;    
 
-    private IGun gun;
+    public IGun gun { get; private set; }
+
+    public event Action<IGun> onGunEquip;
 
     private void Start()
     {
         gun = gameObject.GetComponent<IGun>();
-        Debug.Log(gun);
+        gun.Equip();
     }
 
     private void Update()
@@ -20,5 +23,19 @@ public class GunTester : MonoBehaviour
         {
             gun.Shoot(Input.mousePosition);
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            gun.Reload();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            onGunEquip.Invoke(gun);
+            gun.Equip();
+            
+        }
     }
+
+
 }
