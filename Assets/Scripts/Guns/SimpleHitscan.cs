@@ -32,7 +32,7 @@ public class SimpleHitscan : MonoBehaviour, IGun
 
         if (Physics.Raycast(ray, out hit))
         {
-            IDamagable damagable = hit.collider.GetComponent<IDamagable>();
+            IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
             if (damagable != null)
             {
                 damagable.TakeDamage(gunData.damage);
