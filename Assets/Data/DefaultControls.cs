@@ -51,7 +51,7 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                     ""id"": ""69a8041e-d812-40ff-91fa-6f7b9b4a154b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap,Hold"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -148,7 +148,7 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""e381df75-2d2d-49a1-bfa6-e17e3815372e"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": ""Tap"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""P1_Fire"",

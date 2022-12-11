@@ -34,17 +34,17 @@ public class PlayerShooting : MonoBehaviour
 
     private void OnEnable()
     {
-        inputHandler.OnP1Fire += Fire;
+        inputHandler.OnP1Fire += FireP1;
         inputHandler.OnP1Cover += Cover;
-        inputHandler.OnP2Fire += Fire;
+        inputHandler.OnP2Fire += FireP2;
         inputHandler.OnP2Cover += Cover;
     }
 
     private void OnDisable()
     {
-        inputHandler.OnP1Fire -= Fire;
+        inputHandler.OnP1Fire -= FireP1;
         inputHandler.OnP1Cover -= Cover;
-        inputHandler.OnP2Fire -= Fire;
+        inputHandler.OnP2Fire -= FireP2;
         inputHandler.OnP2Cover -= Cover;
     }
 
@@ -61,9 +61,30 @@ public class PlayerShooting : MonoBehaviour
         player2XHair.anchoredPosition = p2XHairPos;
     }
 
-    public void Fire()
+    public void FireP1()
     {
-        Debug.Log("fire");
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(p1XHairPos.x + (Screen.width / 2f), p1XHairPos.y + (Screen.height / 2f), 0));
+        RaycastHit p1Hit;
+
+        if (Physics.Raycast(ray, out p1Hit))
+        {
+            Debug.Log(p1Hit.transform.name);
+        }
+
+        Debug.Log("fire p1");
+    }
+
+    public void FireP2()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(p2XHairPos.x + (Screen.width / 2f), p2XHairPos.y + (Screen.height / 2f), 0));
+        RaycastHit p2Hit;
+
+        if (Physics.Raycast(ray, out p2Hit))
+        {
+            Debug.Log(p2Hit.transform.name);
+        }
+
+        Debug.Log("fire p2");
     }
 
     public void Cover()
