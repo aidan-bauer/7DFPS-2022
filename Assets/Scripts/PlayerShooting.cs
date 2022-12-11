@@ -16,6 +16,8 @@ public class PlayerShooting : MonoBehaviour
 
     float screenXMin, screenXMax, screenYMin, screenYMax;
 
+    bool isP1Firing, isP2Firing;
+
     private void Awake()
     {
         inputHandler = FindObjectOfType<InputHandler>();
@@ -54,6 +56,7 @@ public class PlayerShooting : MonoBehaviour
         p1XHairPos += inputHandler.player1CursorDelta * p1XHairSensitivity;
         p2XHairPos += inputHandler.player2CursorDelta * p2XHairSensitivity;
 
+        //keep crosshairs in screen bounds
         p1XHairPos = new Vector2(Mathf.Clamp(p1XHairPos.x, screenXMin, screenXMax), Mathf.Clamp(p1XHairPos.y, screenYMin, screenYMax));
         p2XHairPos = new Vector2(Mathf.Clamp(p2XHairPos.x, screenXMin, screenXMax), Mathf.Clamp(p2XHairPos.y, screenYMin, screenYMax));
 
@@ -71,7 +74,14 @@ public class PlayerShooting : MonoBehaviour
             Debug.Log(p1Hit.transform.name);
         }
 
-        Debug.Log("fire p1");
+        StartCoroutine(SetP1Firing());
+
+        if (isP2Firing)
+        {
+            Debug.Log("successful fire");
+        }
+
+        //Debug.Log("fire p1");
     }
 
     public void FireP2()
@@ -84,11 +94,32 @@ public class PlayerShooting : MonoBehaviour
             Debug.Log(p2Hit.transform.name);
         }
 
-        Debug.Log("fire p2");
+        StartCoroutine(SetP2Firing());
+
+        if (isP1Firing)
+        {
+            Debug.Log("successful fire");
+        }
+
+        //Debug.Log("fire p2");
     }
 
     public void Cover()
     {
         Debug.Log("Player is out of cover");
+    }
+
+    IEnumerator SetP1Firing()
+    {
+        isP1Firing = true;
+        yield return new WaitForSeconds(0.3f);
+        isP1Firing = false;
+    }
+
+    IEnumerator SetP2Firing()
+    {
+        isP2Firing = true;
+        yield return new WaitForSeconds(0.3f);
+        isP2Firing = false;
     }
 }

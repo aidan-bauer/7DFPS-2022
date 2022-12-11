@@ -51,7 +51,16 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                     ""id"": ""69a8041e-d812-40ff-91fa-6f7b9b4a154b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Tap,Hold"",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""2a374259-2cb4-4a72-aec9-eb9c29fa6661"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -165,6 +174,28 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                     ""action"": ""P1_Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4e981d6-0ff6-4b48-afb9-e51a92c5f111"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ec25d56-65c7-41bc-bf9f-55ecac98d5d5"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -196,7 +227,7 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                     ""id"": ""c9910f97-1623-4af0-8edb-9850d120d4d9"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Tap,Hold"",
+                    ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -411,6 +442,61 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                     ""action"": ""Navitage"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""b2e90132-5baa-4a7a-a8dd-3b79f26b631f"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navitage"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""e7fc087d-d78e-4cd2-816b-677db1bf5ab7"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Navitage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""97317cf3-16b8-4035-926c-f23dba803e2d"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Navitage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""1b76e364-1f8a-4d61-9b1f-9e8228b1f09a"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Navitage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""52be9f15-6cee-4859-abfa-dc11262bf188"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Navitage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -514,6 +600,61 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""3604ea7d-547a-4c80-a3b8-c242ba7acf5a"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navitage"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""fa31d75f-05b0-4d1b-aa3c-913fcbf340f9"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Navitage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""67926b95-0bc8-4a85-801e-00753b6ae8c1"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Navitage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""fe5cc7b4-e130-4a09-a39e-6ecf9d7bc738"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Navitage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""ff2d419d-765c-484f-8b8f-e7fb86bcce5e"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Navitage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""02015ddc-5216-4eb1-bfff-1593f40b5299"",
                     ""path"": ""<Gamepad>/rightShoulder"",
@@ -526,11 +667,33 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""7a694ae6-6d69-491b-8c6a-f46a380e9d29"",
+                    ""path"": ""<Keyboard>/numpad0"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""ee388fc9-f6e1-4beb-a319-624aa6b2e05b"",
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59d403a3-6133-4362-906e-9e414142774a"",
+                    ""path"": ""<Keyboard>/rightCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Select"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -568,6 +731,7 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
         m_Player1_P1_ToggleCover = m_Player1.FindAction("P1_ToggleCover", throwIfNotFound: true);
         m_Player1_P1_Aim = m_Player1.FindAction("P1_Aim", throwIfNotFound: true);
         m_Player1_P1_Fire = m_Player1.FindAction("P1_Fire", throwIfNotFound: true);
+        m_Player1_Pause = m_Player1.FindAction("Pause", throwIfNotFound: true);
         // Player2
         m_Player2 = asset.FindActionMap("Player2", throwIfNotFound: true);
         m_Player2_P2_ToggleCover = m_Player2.FindAction("P2_ToggleCover", throwIfNotFound: true);
@@ -645,6 +809,7 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player1_P1_ToggleCover;
     private readonly InputAction m_Player1_P1_Aim;
     private readonly InputAction m_Player1_P1_Fire;
+    private readonly InputAction m_Player1_Pause;
     public struct Player1Actions
     {
         private @DefaultControls m_Wrapper;
@@ -652,6 +817,7 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
         public InputAction @P1_ToggleCover => m_Wrapper.m_Player1_P1_ToggleCover;
         public InputAction @P1_Aim => m_Wrapper.m_Player1_P1_Aim;
         public InputAction @P1_Fire => m_Wrapper.m_Player1_P1_Fire;
+        public InputAction @Pause => m_Wrapper.m_Player1_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player1; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -670,6 +836,9 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                 @P1_Fire.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnP1_Fire;
                 @P1_Fire.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnP1_Fire;
                 @P1_Fire.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnP1_Fire;
+                @Pause.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_Player1ActionsCallbackInterface = instance;
             if (instance != null)
@@ -683,6 +852,9 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                 @P1_Fire.started += instance.OnP1_Fire;
                 @P1_Fire.performed += instance.OnP1_Fire;
                 @P1_Fire.canceled += instance.OnP1_Fire;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -857,6 +1029,7 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
         void OnP1_ToggleCover(InputAction.CallbackContext context);
         void OnP1_Aim(InputAction.CallbackContext context);
         void OnP1_Fire(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IPlayer2Actions
     {
