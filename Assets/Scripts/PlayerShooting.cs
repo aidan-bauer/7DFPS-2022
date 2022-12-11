@@ -17,9 +17,12 @@ public class PlayerShooting : MonoBehaviour
     float screenXMin, screenXMax, screenYMin, screenYMax;
 
     bool isP1Firing, isP2Firing;
-    bool isXHairClose;
+    bool isP1Cover, isP2Cover;
+    bool isP1CoverPressed = false, isP2CoverPressed = false;
+    bool isInCover;
 
     Coroutine setP1Firing, setP2Firing;
+    Coroutine setP1Cover, setP2Cover;
 
     private void Awake()
     {
@@ -41,17 +44,17 @@ public class PlayerShooting : MonoBehaviour
     private void OnEnable()
     {
         inputHandler.OnP1Fire += FireP1;
-        inputHandler.OnP1Cover += Cover;
+        inputHandler.OnP1Cover += CoverP1;
         inputHandler.OnP2Fire += FireP2;
-        inputHandler.OnP2Cover += Cover;
+        inputHandler.OnP2Cover += CoverP2;
     }
 
     private void OnDisable()
     {
         inputHandler.OnP1Fire -= FireP1;
-        inputHandler.OnP1Cover -= Cover;
+        inputHandler.OnP1Cover -= CoverP1;
         inputHandler.OnP2Fire -= FireP2;
-        inputHandler.OnP2Cover -= Cover;
+        inputHandler.OnP2Cover -= CoverP2;
     }
 
     // Update is called once per frame
@@ -71,7 +74,7 @@ public class PlayerShooting : MonoBehaviour
     public void FireP1()
     {
         //TODO: replace 50f w/player_constants.minXHairDifference
-        Debug.Log(Vector3.Distance(player1XHair.position, player2XHair.position));
+        //Debug.Log(Vector3.Distance(player1XHair.position, player2XHair.position));
         if (Vector3.Distance(player1XHair.position, player2XHair.position) < 50f)
         {
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(p1XHairPos.x + (Screen.width / 2f), p1XHairPos.y + (Screen.height / 2f), 0));
@@ -130,9 +133,50 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
-    public void Cover()
+    public void CoverP1()
     {
-        Debug.Log("Player is out of cover");
+        isP1CoverPressed = !isP1CoverPressed;
+        if (isInCover && isP1CoverPressed)
+        {
+            if (isP2Cover)
+            {
+                Debug.Log("p1: successful cover");
+                //do successful cover stuff here
+                StopCoroutine(setP2Cover);
+                isP2Cover = false;
+            }
+            else
+            {
+                setP1Cover = StartCoroutine(SetP1Cover());
+            }
+        }
+        else if (!isInCover && !isP1CoverPressed)
+        {
+            isInCover = true;
+        }
+    }
+
+    public void CoverP2()
+    {
+        isP2CoverPressed = !isP2CoverPressed;
+        if (isInCover && isP2CoverPressed)
+        {
+            if (isP1Cover)
+            {
+                Debug.Log("p2: successful cover");
+                //do successful cover stuff here
+                StopCoroutine(setP1Cover);
+                isP1Cover = false;
+            }
+            else
+            {
+                setP2Cover = StartCoroutine(SetP2Cover());
+            }
+        }
+        else if (!isInCover && !isP2CoverPressed)
+        {
+            isInCover = true;
+        }
     }
 
     IEnumerator SetP1Firing()
@@ -143,7 +187,7 @@ public class PlayerShooting : MonoBehaviour
 
         if (!isP2Firing)
         {
-            Debug.Log("player 2 failed to press in time");
+            Debug.Log("player 2 failed to press fire in time");
         }
     }
 
@@ -155,7 +199,31 @@ public class PlayerShooting : MonoBehaviour
 
         if (!isP1Firing)
         {
-            Debug.Log("player 1 failed to press in time");
+            Debug.Log("player 1 failed to press fire in time");
+        }
+    }
+
+    IEnumerator SetP1Cover()
+    {
+        isP1Cover = true;
+        yield return new WaitForSeconds(0.75f);
+        isP1Cover = false;
+
+        if (!isP2Cover)
+        {
+            Debug.Log("player 2 failed to press cover in time");
+        }
+    }
+
+    IEnumerator SetP2Cover()
+    {
+        isP2Cover = true;
+        yield return new WaitForSeconds(0.75f);
+        isP2Cover = false;
+
+        if (!isP1Cover)
+        {
+            Debug.Log("player 1 failed to press cover in time");
         }
     }
 }
