@@ -12,17 +12,18 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] float p2XHairSensitivity = 1f;
     Vector2 p1XHairPos, p2XHairPos;
 
-    [SerializeField] InputHandler inputHandler;
+    InputHandler inputHandler;
 
     float screenXMin, screenXMax, screenYMin, screenYMax;
 
     bool isP1Firing, isP2Firing;
     bool isP1Cover, isP2Cover;
     bool isP1CoverPressed = false, isP2CoverPressed = false;
-    bool isInCover;
+    [SerializeField] bool isInCover = true;
 
     Coroutine setP1Firing, setP2Firing;
-    Coroutine setP1Cover, setP2Cover;
+    Coroutine setP1CoverUp, setP2CoverUp;
+    Coroutine setP1CoverDown, setP2CoverDown;
 
     private void Awake()
     {
@@ -60,21 +61,23 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        p1XHairPos += inputHandler.player1CursorDelta * p1XHairSensitivity;
-        p2XHairPos += inputHandler.player2CursorDelta * p2XHairSensitivity;
+        if (PauseManager.IsPaused)
+        {
+            p1XHairPos += inputHandler.player1CursorDelta * p1XHairSensitivity;
+            p2XHairPos += inputHandler.player2CursorDelta * p2XHairSensitivity;
 
-        //keep crosshairs in screen bounds
-        p1XHairPos = new Vector2(Mathf.Clamp(p1XHairPos.x, screenXMin, screenXMax), Mathf.Clamp(p1XHairPos.y, screenYMin, screenYMax));
-        p2XHairPos = new Vector2(Mathf.Clamp(p2XHairPos.x, screenXMin, screenXMax), Mathf.Clamp(p2XHairPos.y, screenYMin, screenYMax));
+            //keep crosshairs in screen bounds
+            p1XHairPos = new Vector2(Mathf.Clamp(p1XHairPos.x, screenXMin, screenXMax), Mathf.Clamp(p1XHairPos.y, screenYMin, screenYMax));
+            p2XHairPos = new Vector2(Mathf.Clamp(p2XHairPos.x, screenXMin, screenXMax), Mathf.Clamp(p2XHairPos.y, screenYMin, screenYMax));
 
-        player1XHair.position = p1XHairPos;
-        player2XHair.position = p2XHairPos;
+            player1XHair.position = p1XHairPos;
+            player2XHair.position = p2XHairPos;
+        }
     }
 
     public void FireP1()
     {
         //TODO: replace 50f w/player_constants.minXHairDifference
-        //Debug.Log(Vector3.Distance(player1XHair.position, player2XHair.position));
         if (Vector3.Distance(player1XHair.position, player2XHair.position) < 50f)
         {
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(p1XHairPos.x + (Screen.width / 2f), p1XHairPos.y + (Screen.height / 2f), 0));
@@ -140,19 +143,31 @@ public class PlayerShooting : MonoBehaviour
         {
             if (isP2Cover)
             {
-                Debug.Log("p1: successful cover");
+                Debug.Log("p1: successful cover press");
+                isInCover = false;
                 //do successful cover stuff here
-                StopCoroutine(setP2Cover);
+                StopCoroutine(setP2CoverUp);
                 isP2Cover = false;
             }
             else
             {
-                setP1Cover = StartCoroutine(SetP1Cover());
+                setP1CoverUp = StartCoroutine(SetP1Cover());
             }
         }
         else if (!isInCover && !isP1CoverPressed)
         {
-            isInCover = true;
+            if (isP2Cover)
+            {
+                Debug.Log("p1: successful cover release");
+                isInCover = true;
+                //do successful cover stuff here
+                StopCoroutine(setP2CoverDown);
+                isP2Cover = false;
+            }
+            else
+            {
+                setP1CoverDown = StartCoroutine(SetP1Cover());
+            }
         }
     }
 
@@ -163,19 +178,31 @@ public class PlayerShooting : MonoBehaviour
         {
             if (isP1Cover)
             {
-                Debug.Log("p2: successful cover");
+                Debug.Log("p2: successful cover press");
+                isInCover = false;
                 //do successful cover stuff here
-                StopCoroutine(setP1Cover);
+                StopCoroutine(setP1CoverUp);
                 isP1Cover = false;
             }
             else
             {
-                setP2Cover = StartCoroutine(SetP2Cover());
+                setP2CoverUp = StartCoroutine(SetP2Cover());
             }
         }
         else if (!isInCover && !isP2CoverPressed)
         {
-            isInCover = true;
+            if (isP1Cover)
+            {
+                Debug.Log("p2: successful cover release");
+                isInCover = true;
+                //do successful cover stuff here
+                StopCoroutine(setP1CoverDown);
+                isP1Cover = false;
+            }
+            else
+            {
+                setP2CoverDown = StartCoroutine(SetP2Cover());
+            }
         }
     }
 
