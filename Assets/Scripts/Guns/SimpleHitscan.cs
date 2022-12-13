@@ -24,19 +24,30 @@ public class SimpleHitscan : MonoBehaviour, IGun
     {
         currentAmmo = gunData.ammoBeforeReload;
         outOfAmmo = false;
-        onWeaponEquip.Invoke(gunData);
+        if(onWeaponEquip != null)
+        {
+            onWeaponEquip.Invoke(gunData);
+
+        }
     }
 
     public void Misfire()
     {
-        onWeaponMisfire.Invoke();
+        if(onWeaponMisfire != null)
+        {
+            onWeaponMisfire.Invoke();
+
+        }
     }
 
     public void Reload()
     {
         currentAmmo = gunData.ammoBeforeReload;
         outOfAmmo = false;
-        //onWeaponReload.Invoke(currentAmmo);
+        if(onWeaponReload != null)
+        {
+            onWeaponReload.Invoke(currentAmmo);
+        }
     }
 
     public void Shoot(Vector3 fireLocation)
@@ -66,7 +77,10 @@ public class SimpleHitscan : MonoBehaviour, IGun
             }
         }
 
-        //onWeaponFired.Invoke(currentAmmo);
+        if(onWeaponFired != null)
+        {
+            onWeaponFired.Invoke(currentAmmo);
+        }
     }
 
     public GunData GunData()
