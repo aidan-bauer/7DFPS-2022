@@ -20,12 +20,18 @@ public class Health : MonoBehaviour, IDamagable
         if (currentHealth - damage > 0)
         {
             currentHealth -= damage;
-            //onTakeDamage.Invoke(damage);
+            if(onTakeDamage != null)
+            {
+                onTakeDamage.Invoke(damage);
+            }
         }
         else
         {
             //invoke death code
-            onDeath.Invoke();
+            if(onDeath != null)
+            {
+                onDeath.Invoke();
+            }
         }
     }
 }
