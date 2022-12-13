@@ -11,7 +11,7 @@ public class SimpleHitscan : MonoBehaviour, IGun
     [SerializeField] GunData gunData;
 
 
-    private int currentAmmo;
+    [SerializeField] private int currentAmmo;
     public bool outOfAmmo { get; private set; }
 
     
@@ -36,7 +36,7 @@ public class SimpleHitscan : MonoBehaviour, IGun
     {
         currentAmmo = gunData.ammoBeforeReload;
         outOfAmmo = false;
-        onWeaponReload.Invoke(currentAmmo);
+        //onWeaponReload.Invoke(currentAmmo);
     }
 
     public void Shoot(Vector3 fireLocation)
@@ -66,7 +66,7 @@ public class SimpleHitscan : MonoBehaviour, IGun
             }
         }
 
-        onWeaponFired.Invoke(currentAmmo);
+        //onWeaponFired.Invoke(currentAmmo);
     }
 
     public GunData GunData()

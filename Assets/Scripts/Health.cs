@@ -8,6 +8,7 @@ public class Health : MonoBehaviour, IDamagable
     public int currentHealth { get; private set; }
 
     public event Action<int> onTakeDamage;
+    public event Action onDeath;
 
     private void Start()
     {
@@ -16,7 +17,15 @@ public class Health : MonoBehaviour, IDamagable
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        onTakeDamage.Invoke(damage);
+        if (currentHealth - damage > 0)
+        {
+            currentHealth -= damage;
+            //onTakeDamage.Invoke(damage);
+        }
+        else
+        {
+            //invoke death code
+            onDeath.Invoke();
+        }
     }
 }

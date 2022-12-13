@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class PlayerShooting : MonoBehaviour
     Vector2 p1XHairPos, p2XHairPos;
 
     InputHandler inputHandler;
+    SimpleHitscan hitscan;
 
     float screenXMin, screenXMax, screenYMin, screenYMax;
 
@@ -25,9 +27,13 @@ public class PlayerShooting : MonoBehaviour
     Coroutine setP1CoverUp, setP2CoverUp;
     Coroutine setP1CoverDown, setP2CoverDown;
 
+    public static Action<Vector3> OnFire;
+    public static Action onReload;
+
     private void Awake()
     {
         inputHandler = FindObjectOfType<InputHandler>();
+        hitscan = GetComponent<SimpleHitscan>();
     }
 
     // Start is called before the first frame update
@@ -80,18 +86,11 @@ public class PlayerShooting : MonoBehaviour
         //TODO: replace 50f w/player_constants.minXHairDifference
         if (Vector3.Distance(player1XHair.position, player2XHair.position) < 50f)
         {
-            Ray ray = Camera.main.ScreenPointToRay(new Vector3(p1XHairPos.x + (Screen.width / 2f), p1XHairPos.y + (Screen.height / 2f), 0));
-            RaycastHit p1Hit;
-
-            if (Physics.Raycast(ray, out p1Hit))
-            {
-                //Debug.Log(p1Hit.transform.name);
-            }
-
             if (isP2Firing)
             {
                 Debug.Log("p1: successful fire");
-                //do successful fire stuff here
+                //do successful fire stuff 
+                hitscan.Shoot(FindMidpoint(p1XHairPos, p2XHairPos));
                 StopCoroutine(setP2Firing);
                 isP2Firing = false;
             }
@@ -110,18 +109,11 @@ public class PlayerShooting : MonoBehaviour
         //TODO: replace 50f w/player_constants.minXHairDifference
         if (Vector3.Distance(player1XHair.position, player2XHair.position) < 50f)
         {
-            Ray ray = Camera.main.ScreenPointToRay(new Vector3(p2XHairPos.x + (Screen.width / 2f), p2XHairPos.y + (Screen.height / 2f), 0));
-            RaycastHit p2Hit;
-
-            if (Physics.Raycast(ray, out p2Hit))
-            {
-                //Debug.Log(p2Hit.transform.name);
-            }
-
             if (isP1Firing)
             {
                 Debug.Log("p2: successful fire");
                 //do successful fire stuff here
+                hitscan.Shoot(FindMidpoint(p1XHairPos, p2XHairPos));
                 StopCoroutine(setP1Firing);
                 isP1Firing = false;
             }
@@ -146,6 +138,7 @@ public class PlayerShooting : MonoBehaviour
                 Debug.Log("p1: successful cover press");
                 isInCover = false;
                 //do successful cover stuff here
+                hitscan.Reload();
                 StopCoroutine(setP2CoverUp);
                 isP2Cover = false;
             }
@@ -161,6 +154,7 @@ public class PlayerShooting : MonoBehaviour
                 Debug.Log("p1: successful cover release");
                 isInCover = true;
                 //do successful cover stuff here
+                hitscan.Reload();
                 StopCoroutine(setP2CoverDown);
                 isP2Cover = false;
             }
@@ -196,6 +190,7 @@ public class PlayerShooting : MonoBehaviour
                 Debug.Log("p2: successful cover release");
                 isInCover = true;
                 //do successful cover stuff here
+                hitscan.Reload();
                 StopCoroutine(setP1CoverDown);
                 isP1Cover = false;
             }
@@ -252,5 +247,12 @@ public class PlayerShooting : MonoBehaviour
         {
             Debug.Log("player 1 failed to press cover in time");
         }
+    }
+
+    Vector3 FindMidpoint(Vector3 a, Vector3 b)
+    {
+        Vector3 aToB = a - b;
+        float mag = aToB.magnitude;
+        return b + aToB.normalized * (mag / 2f);
     }
 }
