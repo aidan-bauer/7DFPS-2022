@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, IDamagable
 {
+    public bool inCover = true;
     [SerializeField] private int maxHealth = 100;
     public int currentHealth { get; private set; }
 
     public event Action<int> onTakeDamage;
-    public event Action onDeath;
+    public event Action<Health> onDeath;
 
     private void Start()
     {
@@ -30,8 +31,13 @@ public class Health : MonoBehaviour, IDamagable
             //invoke death code
             if(onDeath != null)
             {
-                onDeath.Invoke();
+                onDeath.Invoke(this);
             }
         }
+    }
+
+    public void SetCoverStatus()
+    {
+        inCover = !inCover;
     }
 }

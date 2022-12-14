@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22db6d2be77acdd4eb94ac3c0e45f64b, type: 3}
   m_Name: test_gun
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 50
   fireRate: 1
   ammoBeforeReload: 12
   fireSoundEffect: {fileID: 0}

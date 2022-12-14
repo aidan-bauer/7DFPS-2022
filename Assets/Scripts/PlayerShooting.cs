@@ -15,6 +15,7 @@ public class PlayerShooting : MonoBehaviour
 
     InputHandler inputHandler;
     SimpleHitscan hitscan;
+    Health playerHealth;
 
     float screenXMin, screenXMax, screenYMin, screenYMax;
 
@@ -34,6 +35,7 @@ public class PlayerShooting : MonoBehaviour
     {
         inputHandler = FindObjectOfType<InputHandler>();
         hitscan = GetComponent<SimpleHitscan>();
+        playerHealth = GetComponent<Health>();
     }
 
     // Start is called before the first frame update
@@ -137,6 +139,7 @@ public class PlayerShooting : MonoBehaviour
             {
                 Debug.Log("p1: successful cover press");
                 isInCover = false;
+                playerHealth.SetCoverStatus();
                 //do successful cover stuff here
                 hitscan.Reload();
                 StopCoroutine(setP2CoverUp);
@@ -153,6 +156,7 @@ public class PlayerShooting : MonoBehaviour
             {
                 Debug.Log("p1: successful cover release");
                 isInCover = true;
+                playerHealth.SetCoverStatus();
                 //do successful cover stuff here
                 hitscan.Reload();
                 StopCoroutine(setP2CoverDown);
@@ -174,6 +178,7 @@ public class PlayerShooting : MonoBehaviour
             {
                 Debug.Log("p2: successful cover press");
                 isInCover = false;
+                playerHealth.SetCoverStatus();
                 //do successful cover stuff here
                 StopCoroutine(setP1CoverUp);
                 isP1Cover = false;
@@ -189,6 +194,7 @@ public class PlayerShooting : MonoBehaviour
             {
                 Debug.Log("p2: successful cover release");
                 isInCover = true;
+                playerHealth.SetCoverStatus();
                 //do successful cover stuff here
                 hitscan.Reload();
                 StopCoroutine(setP1CoverDown);
