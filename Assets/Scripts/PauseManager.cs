@@ -38,8 +38,8 @@ public class PauseManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isPaused = true;
-        SetTimeScale(isPaused);     //lock the cursor when level loads
+        //isPaused = true;
+        //SetTimeScale(isPaused);     //lock the cursor when level loads
     }
 
     void SetPause()

@@ -13,13 +13,15 @@ public class HealthBar : MonoBehaviour
     [SerializeField] Image healthBarImage;
     [SerializeField] TextMeshProUGUI healthText;
 
-    private void Start()
+    private void Awake()
     {
         if(player == null)
         {
             player = FindObjectOfType<PlayerShooting>().gameObject;
         }
         health = player.GetComponent<Health>();
+
+        UpdateHealthBar(0);
     }
 
     private void OnEnable()

@@ -19,7 +19,7 @@ public class PlayerShooting : MonoBehaviour
 
     float screenXMin, screenXMax, screenYMin, screenYMax;
 
-    bool isP1Firing, isP2Firing;
+    public bool isP1Firing, isP2Firing;
     bool isP1Cover, isP2Cover;
     bool isP1CoverPressed = false, isP2CoverPressed = false;
     [SerializeField] bool isInCover = true;
@@ -69,7 +69,7 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PauseManager.IsPaused)
+        if (!PauseManager.IsPaused)
         {
             p1XHairPos += inputHandler.player1CursorDelta * p1XHairSensitivity;
             p2XHairPos += inputHandler.player2CursorDelta * p2XHairSensitivity;
@@ -90,7 +90,8 @@ public class PlayerShooting : MonoBehaviour
         {
             if (isP2Firing)
             {
-                Debug.Log("p1: successful fire");
+                //Debug.Log("p1: successful fire");
+
                 //do successful fire stuff 
                 hitscan.Shoot(FindMidpoint(p1XHairPos, p2XHairPos));
                 StopCoroutine(setP2Firing);
@@ -113,7 +114,8 @@ public class PlayerShooting : MonoBehaviour
         {
             if (isP1Firing)
             {
-                Debug.Log("p2: successful fire");
+                //Debug.Log("p2: successful fire");
+
                 //do successful fire stuff here
                 hitscan.Shoot(FindMidpoint(p1XHairPos, p2XHairPos));
                 StopCoroutine(setP1Firing);
@@ -140,6 +142,7 @@ public class PlayerShooting : MonoBehaviour
                 Debug.Log("p1: successful cover press");
                 isInCover = false;
                 playerHealth.SetCoverStatus();
+
                 //do successful cover stuff here
                 hitscan.Reload();
                 StopCoroutine(setP2CoverUp);
@@ -157,8 +160,8 @@ public class PlayerShooting : MonoBehaviour
                 Debug.Log("p1: successful cover release");
                 isInCover = true;
                 playerHealth.SetCoverStatus();
+
                 //do successful cover stuff here
-                hitscan.Reload();
                 StopCoroutine(setP2CoverDown);
                 isP2Cover = false;
             }
@@ -179,7 +182,9 @@ public class PlayerShooting : MonoBehaviour
                 Debug.Log("p2: successful cover press");
                 isInCover = false;
                 playerHealth.SetCoverStatus();
+
                 //do successful cover stuff here
+                hitscan.Reload();
                 StopCoroutine(setP1CoverUp);
                 isP1Cover = false;
             }
@@ -195,8 +200,8 @@ public class PlayerShooting : MonoBehaviour
                 Debug.Log("p2: successful cover release");
                 isInCover = true;
                 playerHealth.SetCoverStatus();
+
                 //do successful cover stuff here
-                hitscan.Reload();
                 StopCoroutine(setP1CoverDown);
                 isP1Cover = false;
             }

@@ -8,29 +8,40 @@ public class StageManager : MonoBehaviour
 {
 
     public int stage = 0;
-
+    public AnimationClip[] levelTransitions;
     public List<List<Health>> enemies;
 
     public Action<int> OnStageComplete;
     public Action OnLevelComplete;
 
+    Animation levelTransit;
+
     private void Awake()
     {
+        levelTransit = GameObject.FindGameObjectWithTag("Player").GetComponent<Animation>();
         enemies = new List<List<Health>>();
-
-        List<Transform> stages = new List<Transform>();
 
         int stageIndex = 0;
 
         foreach (Transform stage in transform)
         {
-            Debug.Log(stage.name);
-            stages.Add(stage);
+            enemies.Add(new List<Health>());
 
             List<Health> enemiesInStage = stage.GetComponentsInChildren<Health>().ToList();
 
             enemies[stageIndex].AddRange(enemiesInStage);
+            stageIndex++;
+
+            foreach (Health enemy in enemiesInStage)
+            {
+                enemy.gameObject.SetActive(false);
+            }
         }
+    }
+
+    private void Start()
+    {
+        ReactivateEnemies();
     }
 
     private void OnEnable()
@@ -63,32 +74,67 @@ public class StageManager : MonoBehaviour
 
     void RemoveFromStage(Health enemyToRemove)
     {
-        if (stage == enemies.Count())
+        if (stage < enemies.Count())
         {
             if (enemies[stage].Count > 0)
             {
+                GameObject toDelete = enemies[stage][enemies[stage].IndexOf(enemyToRemove)].gameObject;
                 enemies[stage].Remove(enemyToRemove);
+                Destroy(toDelete);
+
+                //if all enemies are eliminated, move to the next stage
+                if (enemies[stage].Count == 0)
+                {
+                    stage++;
+                    OnStageComplete.Invoke(stage);
+                }
             }
-            else
-            {
-                stage++;
-                OnStageComplete.Invoke(stage);
-            }
-        }
-        else
-        {
-            OnLevelComplete.Invoke();
         }
     }
 
     void MoveToNextStage(int nextStage)
     {
-
+        if (stage == enemies.Count())
+        {
+            OnLevelComplete.Invoke();
+        } else
+        {
+            levelTransit.AddClip(levelTransitions[stage - 1], levelTransitions[stage - 1].name);
+            levelTransit.clip = levelTransitions[stage - 1];
+            levelTransit.Play();
+            StartCoroutine(TransitionEnd(ReactivateEnemies));
+        }
     }
 
     void LevelComplete()
     {
+        Debug.Log("FINISH!");
+    }
 
+    void ReactivateEnemies()
+    {
+        foreach (Health enemy in enemies[stage])
+        {
+            enemy.gameObject.SetActive(true);
+        }
+    }
+
+    IEnumerator TransitionEnd(Action callback)
+    {
+        bool transitionOver = false;
+
+        while (!transitionOver)
+        {
+            if (!levelTransit.isPlaying)
+            {
+                callback.Invoke();
+                transitionOver = true;
+                //yield return null;
+                yield break;
+            }
+
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
     }
 }
 

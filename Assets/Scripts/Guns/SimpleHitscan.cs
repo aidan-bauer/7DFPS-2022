@@ -20,6 +20,11 @@ public class SimpleHitscan : MonoBehaviour, IGun
     public event Action<int> onWeaponFired;
     public event Action<GunData> onWeaponEquip;
 
+    private void Start()
+    {
+        Reload();
+    }
+
     public void Equip()
     {
         currentAmmo = gunData.ammoBeforeReload;

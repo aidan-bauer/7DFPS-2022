@@ -16,11 +16,22 @@ public class Health : MonoBehaviour, IDamagable
         currentHealth = maxHealth;
     }
 
+    private void OnEnable()
+    {
+        onDeath += OnDeath;
+    }
+
+    private void OnDisable()
+    {
+        onDeath -= OnDeath;
+    }
+
     public void TakeDamage(int damage)
     {
         if (currentHealth - damage > 0)
         {
             currentHealth -= damage;
+
             if(onTakeDamage != null)
             {
                 onTakeDamage.Invoke(damage);
@@ -39,5 +50,10 @@ public class Health : MonoBehaviour, IDamagable
     public void SetCoverStatus()
     {
         inCover = !inCover;
+    }
+
+    void OnDeath(Health health)
+    {
+        //Debug.Log(health.gameObject.name + " is deded");
     }
 }
