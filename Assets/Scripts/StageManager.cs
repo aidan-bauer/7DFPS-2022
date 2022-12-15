@@ -11,8 +11,8 @@ public class StageManager : MonoBehaviour
     public AnimationClip[] levelTransitions;
     public List<List<Health>> enemies;
 
-    public Action<int> OnStageComplete;
-    public Action OnLevelComplete;
+    public static Action<int> OnStageComplete;
+    public static Action OnLevelComplete;
 
     Animation levelTransit;
 

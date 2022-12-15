@@ -28,32 +28,40 @@ public class Health : MonoBehaviour, IDamagable
 
     public void TakeDamage(int damage)
     {
-        if (currentHealth - damage > 0)
+        //Debug.Log(transform.name + " takes " + damage);
+        if (!inCover)
         {
-            currentHealth -= damage;
+            if (currentHealth - damage > 0)
+            {
+                currentHealth -= damage;
 
-            if(onTakeDamage != null)
-            {
-                onTakeDamage.Invoke(damage);
+                if (onTakeDamage != null)
+                {
+                    onTakeDamage.Invoke(damage);
+                }
             }
-        }
-        else
-        {
-            //invoke death code
-            if(onDeath != null)
+            else
             {
-                onDeath.Invoke(this);
+                //invoke death code
+                if (onDeath != null)
+                {
+                    onDeath.Invoke(this);
+                }
             }
         }
     }
 
-    public void SetCoverStatus()
+    public void SetCoverStatus(bool newCover)
     {
-        inCover = !inCover;
+        inCover = newCover;
     }
 
     void OnDeath(Health health)
     {
         //Debug.Log(health.gameObject.name + " is deded");
+        if (!transform.CompareTag("Player"))
+        {
+            ScoreManager.ScoreChange.Invoke(10);
+        }
     }
 }

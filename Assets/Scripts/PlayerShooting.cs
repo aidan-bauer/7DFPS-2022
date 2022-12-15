@@ -85,50 +85,57 @@ public class PlayerShooting : MonoBehaviour
 
     public void FireP1()
     {
-        //TODO: replace 50f w/player_constants.minXHairDifference
-        if (Vector3.Distance(player1XHair.position, player2XHair.position) < 50f)
+        if (!isInCover)
         {
-            if (isP2Firing)
+            //TODO: replace 50f w/player_constants.minXHairDifference
+            if (Vector3.Distance(player1XHair.position, player2XHair.position) < 50f)
             {
-                //Debug.Log("p1: successful fire");
+                if (isP2Firing)
+                {
+                    //Debug.Log("p1: successful fire");
 
-                //do successful fire stuff 
-                hitscan.Shoot(FindMidpoint(p1XHairPos, p2XHairPos));
-                StopCoroutine(setP2Firing);
-                isP2Firing = false;
+                    //do successful fire stuff 
+                    hitscan.Shoot(FindMidpoint(p1XHairPos, p2XHairPos));
+                    StopCoroutine(setP2Firing);
+                    isP2Firing = false;
+                }
+                else
+                {
+                    setP1Firing = StartCoroutine(SetP1Firing());
+                }
             }
             else
             {
-                setP1Firing = StartCoroutine(SetP1Firing());
+                Debug.Log("p1: crosshairs not close enough");
             }
-        } else
-        {
-            Debug.Log("p1: crosshairs not close enough");
         }
     }
 
     public void FireP2()
     {
-        //TODO: replace 50f w/player_constants.minXHairDifference
-        if (Vector3.Distance(player1XHair.position, player2XHair.position) < 50f)
+        if (!isInCover)
         {
-            if (isP1Firing)
+            //TODO: replace 50f w/player_constants.minXHairDifference
+            if (Vector3.Distance(player1XHair.position, player2XHair.position) < 50f)
             {
-                //Debug.Log("p2: successful fire");
+                if (isP1Firing)
+                {
+                    //Debug.Log("p2: successful fire");
 
-                //do successful fire stuff here
-                hitscan.Shoot(FindMidpoint(p1XHairPos, p2XHairPos));
-                StopCoroutine(setP1Firing);
-                isP1Firing = false;
+                    //do successful fire stuff here
+                    hitscan.Shoot(FindMidpoint(p1XHairPos, p2XHairPos));
+                    StopCoroutine(setP1Firing);
+                    isP1Firing = false;
+                }
+                else
+                {
+                    setP2Firing = StartCoroutine(SetP2Firing());
+                }
             }
             else
             {
-                setP2Firing = StartCoroutine(SetP2Firing());
+                Debug.Log("p2: crosshairs not close enough");
             }
-        }
-        else
-        {
-            Debug.Log("p2: crosshairs not close enough");
         }
     }
 
@@ -139,12 +146,11 @@ public class PlayerShooting : MonoBehaviour
         {
             if (isP2Cover)
             {
-                Debug.Log("p1: successful cover press");
+                //Debug.Log("p1: successful cover press");
                 isInCover = false;
-                playerHealth.SetCoverStatus();
+                //playerHealth.SetCoverStatus(isInCover);
 
                 //do successful cover stuff here
-                hitscan.Reload();
                 StopCoroutine(setP2CoverUp);
                 isP2Cover = false;
             }
@@ -157,12 +163,13 @@ public class PlayerShooting : MonoBehaviour
         {
             if (isP2Cover)
             {
-                Debug.Log("p1: successful cover release");
+                //Debug.Log("p1: successful cover release");
                 isInCover = true;
-                playerHealth.SetCoverStatus();
+                //playerHealth.SetCoverStatus(isInCover);
 
                 //do successful cover stuff here
                 StopCoroutine(setP2CoverDown);
+                hitscan.Reload();
                 isP2Cover = false;
             }
             else
@@ -170,6 +177,8 @@ public class PlayerShooting : MonoBehaviour
                 setP1CoverDown = StartCoroutine(SetP1Cover());
             }
         }
+
+        playerHealth.SetCoverStatus(isInCover);
     }
 
     public void CoverP2()
@@ -179,12 +188,11 @@ public class PlayerShooting : MonoBehaviour
         {
             if (isP1Cover)
             {
-                Debug.Log("p2: successful cover press");
+                //Debug.Log("p2: successful cover press");
                 isInCover = false;
-                playerHealth.SetCoverStatus();
+                //playerHealth.SetCoverStatus(isInCover);
 
                 //do successful cover stuff here
-                hitscan.Reload();
                 StopCoroutine(setP1CoverUp);
                 isP1Cover = false;
             }
@@ -197,11 +205,12 @@ public class PlayerShooting : MonoBehaviour
         {
             if (isP1Cover)
             {
-                Debug.Log("p2: successful cover release");
+                //Debug.Log("p2: successful cover release");
                 isInCover = true;
-                playerHealth.SetCoverStatus();
+                //playerHealth.SetCoverStatus(isInCover);
 
                 //do successful cover stuff here
+                hitscan.Reload();
                 StopCoroutine(setP1CoverDown);
                 isP1Cover = false;
             }
@@ -210,6 +219,8 @@ public class PlayerShooting : MonoBehaviour
                 setP2CoverDown = StartCoroutine(SetP2Cover());
             }
         }
+
+        playerHealth.SetCoverStatus(isInCover);
     }
 
     IEnumerator SetP1Firing()
