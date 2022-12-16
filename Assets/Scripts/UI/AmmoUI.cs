@@ -7,10 +7,10 @@ using TMPro;
 
 public class AmmoUI : MonoBehaviour
 {
-    IGun currentGun;
+    [SerializeField] GunData currentGun;
     private GunData gunData;
 
-    public GunTester gunTester; //Temporary, this would be a reference to whatever holds the players current gun
+    public SimpleHitscan hitscan; //Temporary, this would be a reference to whatever holds the players current gun
 
     [Header("UI Object References")]
     [SerializeField] Image gunImage;
@@ -22,38 +22,45 @@ public class AmmoUI : MonoBehaviour
 
     private void OnEnable()
     {
-        if(gunTester == null)
+        if(hitscan == null)
         {
-            gunTester = FindObjectOfType<GunTester>();
+            hitscan = GameObject.FindGameObjectWithTag("Player").GetComponent<SimpleHitscan>();
+
         }
-        gunTester.onGunEquip += UpdateCurrentWeapon;
+        hitscan.onWeaponEquip += UpdateCurrentWeapon;
     }
 
     private void OnDisable()
     {
-        gunTester.onGunEquip -= UpdateCurrentWeapon;
+        hitscan.onWeaponEquip -= UpdateCurrentWeapon;
+
+        hitscan.onWeaponEquip -= UpdateGunData;
+        hitscan.onWeaponFired -= UpdateAmmo;
+        hitscan.onWeaponReload -= UpdateAmmo;
     }
 
-    private void UpdateCurrentWeapon(IGun newGun)
+    private void UpdateCurrentWeapon(GunData newGun)
     {
         //Unsubscribe from previous weapon Actions
         if(currentGun != null)
         {
-            currentGun.onWeaponEquip -= UpdateGunData;
-            currentGun.onWeaponFired -= UpdateAmmo;
-            currentGun.onWeaponReload -= UpdateAmmo;
+            hitscan.onWeaponEquip -= UpdateGunData;
+            hitscan.onWeaponFired -= UpdateAmmo;
+            hitscan.onWeaponReload -= UpdateAmmo;
         }
 
         //Subscribe to new weapon Actions
         currentGun = newGun;
-        currentGun.onWeaponEquip += UpdateGunData;
-        currentGun.onWeaponFired += UpdateAmmo;
-        currentGun.onWeaponReload += UpdateAmmo;
-        
+        hitscan.onWeaponEquip += UpdateGunData;
+        hitscan.onWeaponFired += UpdateAmmo;
+        hitscan.onWeaponReload += UpdateAmmo;
+
+        UpdateGunData(currentGun);
     }
 
     private void UpdateGunData(GunData newData)
     {
+        Debug.Log("update gun data");
         gunData = newData;
         gunImage.sprite = gunData.gunImage;
         ammoImage.sprite = gunData.ammoImage;
@@ -64,6 +71,7 @@ public class AmmoUI : MonoBehaviour
 
     private void UpdateAmmo(int currentAmmo)
     {
+        Debug.Log("Update Ammo: " + currentAmmo.ToString());
         ammoRemaining.text = currentAmmo.ToString();
     }
 }

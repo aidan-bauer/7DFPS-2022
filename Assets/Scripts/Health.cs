@@ -11,7 +11,7 @@ public class Health : MonoBehaviour, IDamagable
     public event Action<int> onTakeDamage;
     public event Action<Health> onDeath;
 
-    private void Start()
+    private void Awake()
     {
         currentHealth = maxHealth;
     }

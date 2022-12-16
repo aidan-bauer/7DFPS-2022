@@ -115,7 +115,7 @@ public class StageManager : MonoBehaviour
     {
         foreach (Health enemy in enemies[stage])
         {
-            enemy.gameObject.SetActive(true);
+            enemy.GetComponent<EnemyShooting>().Activate();
         }
     }
 

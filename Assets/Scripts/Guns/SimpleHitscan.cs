@@ -22,7 +22,9 @@ public class SimpleHitscan : MonoBehaviour, IGun
 
     private void Start()
     {
-        Reload();
+        Equip();
+        //onWeaponEquip.Invoke(gunData);
+        //Reload();
     }
 
     public void Equip()
@@ -32,7 +34,6 @@ public class SimpleHitscan : MonoBehaviour, IGun
         if(onWeaponEquip != null)
         {
             onWeaponEquip.Invoke(gunData);
-
         }
     }
 

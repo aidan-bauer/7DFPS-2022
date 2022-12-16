@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22db6d2be77acdd4eb94ac3c0e45f64b, type: 3}
-  m_Name: test_gun
+  m_Name: test_enemy_gun
   m_EditorClassIdentifier: 
-  damage: 50
+  damage: 10
   fireRate: 1
-  ammoBeforeReload: 12
+  ammoBeforeReload: 6
   fireSoundEffect: {fileID: 0}
   reloadSoundEffect: {fileID: 0}
-  gunImage: {fileID: 21300000, guid: 0bdc7d64f9c78194da358f1e01bb1bbf, type: 3}
-  ammoImage: {fileID: 21300000, guid: 63385a0641288ae40889654208b4e33d, type: 3}
+  gunImage: {fileID: 0}
+  ammoImage: {fileID: 0}

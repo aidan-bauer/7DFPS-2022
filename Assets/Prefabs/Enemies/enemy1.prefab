@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7894973006340902818
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6044862193176682189, guid: b4d19eacad47bee4abca0edfce8aeb39, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044862193176682189, guid: b4d19eacad47bee4abca0edfce8aeb39, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.77807724
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044862193176682189, guid: b4d19eacad47bee4abca0edfce8aeb39, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.50000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044862193176682189, guid: b4d19eacad47bee4abca0edfce8aeb39, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.1041327
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044862193176682189, guid: b4d19eacad47bee4abca0edfce8aeb39, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044862193176682189, guid: b4d19eacad47bee4abca0edfce8aeb39, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044862193176682189, guid: b4d19eacad47bee4abca0edfce8aeb39, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044862193176682189, guid: b4d19eacad47bee4abca0edfce8aeb39, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044862193176682189, guid: b4d19eacad47bee4abca0edfce8aeb39, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044862193176682189, guid: b4d19eacad47bee4abca0edfce8aeb39, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044862193176682189, guid: b4d19eacad47bee4abca0edfce8aeb39, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6388490828822365303, guid: b4d19eacad47bee4abca0edfce8aeb39, type: 3}
+      propertyPath: m_Name
+      value: enemy1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b4d19eacad47bee4abca0edfce8aeb39, type: 3}
+--- !u!1 &3835077389595118549 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6388490828822365303, guid: b4d19eacad47bee4abca0edfce8aeb39, type: 3}
+  m_PrefabInstance: {fileID: 7894973006340902818}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1826275491296139988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3835077389595118549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0602b2ea7fd3ae8418df611055d0aab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inCover: 1
+  maxHealth: 100
+--- !u!114 &266797777035333241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3835077389595118549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 923f5690f72fa7643a526bebf7d0dc83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9210325583886037125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3835077389595118549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0164a947907ad55448378dc33c6194b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 0}
+  gunData: {fileID: 0}
+  currentAmmo: 0
