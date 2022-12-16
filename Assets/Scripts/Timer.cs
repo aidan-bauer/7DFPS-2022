@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class Timer : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class Timer : MonoBehaviour
 
     private bool timerPaused = false;
 
+    public event Action onTimerZero;
+
     void Start()
     {
         ResetTimer();
@@ -44,6 +47,10 @@ public class Timer : MonoBehaviour
             }
             else
             {
+                if(onTimerZero != null)
+                {
+                    onTimerZero.Invoke();
+                }
                 Flash();
             }
         }
