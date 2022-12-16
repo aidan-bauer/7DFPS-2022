@@ -21,6 +21,9 @@ public class SettingsMenu : MonoBehaviour
 
     public void UpdateSensitivity(float sensitivity)
     {
-        onSensitivityChanged.Invoke(sensitivity);
+        if(onSensitivityChanged != null)
+        {
+            onSensitivityChanged.Invoke(sensitivity);
+        }
     }
 }
