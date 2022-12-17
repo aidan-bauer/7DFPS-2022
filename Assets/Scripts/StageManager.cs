@@ -11,6 +11,7 @@ public class StageManager : MonoBehaviour
     public AnimationClip[] levelTransitions;
     public List<List<Health>> enemies;
 
+    public static Action<int> OnStageBegin;
     public static Action<int> OnStageComplete;
     public static Action OnLevelComplete;
 
@@ -117,6 +118,9 @@ public class StageManager : MonoBehaviour
         {
             enemy.GetComponent<EnemyShooting>().Activate();
         }
+
+        if (OnStageBegin != null)
+            OnStageBegin.Invoke(stage);
     }
 
     IEnumerator TransitionEnd(Action callback)

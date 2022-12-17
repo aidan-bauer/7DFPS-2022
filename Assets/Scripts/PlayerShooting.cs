@@ -12,6 +12,7 @@ public class PlayerShooting : MonoBehaviour
     [Range(0f, 2f)]
     [SerializeField] float p2XHairSensitivity = 1f;
     [SerializeField] Vector3 coverOffset = Vector3.up;
+    Vector3 inCoverPos, outCoverPos;
     Vector2 p1XHairPos, p2XHairPos;
 
     InputHandler inputHandler;
@@ -59,6 +60,8 @@ public class PlayerShooting : MonoBehaviour
         inputHandler.OnP1Cover += CoverP1;
         inputHandler.OnP2Fire += FireP2;
         inputHandler.OnP2Cover += CoverP2;
+
+        StageManager.OnStageBegin += SetPlayerCoverPos;
     }
 
     private void OnDisable()
@@ -67,6 +70,8 @@ public class PlayerShooting : MonoBehaviour
         inputHandler.OnP1Cover -= CoverP1;
         inputHandler.OnP2Fire -= FireP2;
         inputHandler.OnP2Cover -= CoverP2;
+
+        StageManager.OnStageBegin -= SetPlayerCoverPos;
     }
 
     // Update is called once per frame
@@ -83,6 +88,11 @@ public class PlayerShooting : MonoBehaviour
 
             player1XHair.position = p1XHairPos;
             player2XHair.position = p2XHairPos;
+
+            if (isInCover)
+            {
+
+            }
         }
     }
 
@@ -152,8 +162,14 @@ public class PlayerShooting : MonoBehaviour
                 //playerHealth.SetCoverStatus(isInCover);
 
                 playerHealth.SetCoverStatus(isInCover);
+
                 if (!isCoverCoroutineRunning)
-                    StartCoroutine(ChangeCover(isInCover));
+                    cover = StartCoroutine(ChangeCover(isInCover));
+                else
+                {
+                    StopCoroutine(cover);
+                    cover = StartCoroutine(ChangeCover(isInCover));
+                }
 
                 //do successful cover stuff here
                 StopCoroutine(setP2CoverUp);
@@ -173,8 +189,14 @@ public class PlayerShooting : MonoBehaviour
                 //playerHealth.SetCoverStatus(isInCover);
 
                 playerHealth.SetCoverStatus(isInCover);
+
                 if (!isCoverCoroutineRunning)
-                    StartCoroutine(ChangeCover(isInCover));
+                    cover = StartCoroutine(ChangeCover(isInCover));
+                else
+                {
+                    StopCoroutine(cover);
+                    cover = StartCoroutine(ChangeCover(isInCover));
+                }
 
                 //do successful cover stuff here
                 StopCoroutine(setP2CoverDown);
@@ -200,8 +222,14 @@ public class PlayerShooting : MonoBehaviour
                 //playerHealth.SetCoverStatus(isInCover);
 
                 playerHealth.SetCoverStatus(isInCover);
+
                 if (!isCoverCoroutineRunning)
-                    StartCoroutine(ChangeCover(isInCover));
+                    cover = StartCoroutine(ChangeCover(isInCover));
+                else
+                {
+                    StopCoroutine(cover);
+                    cover = StartCoroutine(ChangeCover(isInCover));
+                }
 
                 //do successful cover stuff here
                 StopCoroutine(setP1CoverUp);
@@ -221,8 +249,14 @@ public class PlayerShooting : MonoBehaviour
                 //playerHealth.SetCoverStatus(isInCover);
 
                 playerHealth.SetCoverStatus(isInCover);
+
                 if (!isCoverCoroutineRunning)
-                    StartCoroutine(ChangeCover(isInCover));
+                    cover = StartCoroutine(ChangeCover(isInCover));
+                else
+                {
+                    StopCoroutine(cover);
+                    cover = StartCoroutine(ChangeCover(isInCover));
+                }
 
                 //do successful cover stuff here
                 hitscan.Reload();
@@ -287,21 +321,26 @@ public class PlayerShooting : MonoBehaviour
     IEnumerator ChangeCover(bool newCoverState)
     {
         isCoverCoroutineRunning = true;
-        //newCoverState = false is out of cover
-        Vector3 currentPosition = transform.position;
-        Vector3 destination = !newCoverState ? transform.position + coverOffset : transform.position - coverOffset;
+        Vector3 currentPos = transform.position;
 
         float transitionTimer = 0;
 
         while (transitionTimer < 1f)
         {
-            transform.position = Vector3.Lerp(currentPosition, destination, transitionTimer / 1f);
+            transform.position = !newCoverState ? Vector3.Lerp(inCoverPos, outCoverPos, transitionTimer / 1f) : Vector3.Lerp(outCoverPos, inCoverPos, transitionTimer / 1f);
             transitionTimer += Time.deltaTime * Manager.constants.coverStateChangeSpeed;
             yield return new WaitForSeconds(Time.deltaTime);
         }
 
         isCoverCoroutineRunning = false;
         yield return null;
+    }
+
+    public void SetPlayerCoverPos(int stage)
+    {
+        inCoverPos = transform.position;
+        outCoverPos = transform.position + coverOffset;
+        isInCover = true;
     }
 
     Vector3 FindMidpoint(Vector3 a, Vector3 b)
