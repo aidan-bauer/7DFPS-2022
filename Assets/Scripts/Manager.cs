@@ -5,17 +5,13 @@ using UnityEngine;
 public class Manager : MonoBehaviour
 {
 
-    GlobalConstants constants;
+    public static GlobalConstants constants;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (constants == null)
+        {
+            constants = Resources.Load<GlobalConstants>("Constants");
+        }
     }
 }

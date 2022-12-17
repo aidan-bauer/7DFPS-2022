@@ -11,6 +11,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] float p1XHairSensitivity = 1f;
     [Range(0f, 2f)]
     [SerializeField] float p2XHairSensitivity = 1f;
+    [SerializeField] Vector3 coverOffset = Vector3.up;
     Vector2 p1XHairPos, p2XHairPos;
 
     InputHandler inputHandler;
@@ -27,6 +28,8 @@ public class PlayerShooting : MonoBehaviour
     Coroutine setP1Firing, setP2Firing;
     Coroutine setP1CoverUp, setP2CoverUp;
     Coroutine setP1CoverDown, setP2CoverDown;
+    Coroutine cover;
+    bool isCoverCoroutineRunning = false;
 
     public static Action<Vector3> OnFire;
     public static Action onReload;
@@ -87,8 +90,7 @@ public class PlayerShooting : MonoBehaviour
     {
         if (!isInCover)
         {
-            //TODO: replace 50f w/player_constants.minXHairDifference
-            if (Vector3.Distance(player1XHair.position, player2XHair.position) < 50f)
+            if (Vector3.Distance(player1XHair.position, player2XHair.position) < Manager.constants.minXHairDifference)
             {
                 if (isP2Firing)
                 {
@@ -115,8 +117,7 @@ public class PlayerShooting : MonoBehaviour
     {
         if (!isInCover)
         {
-            //TODO: replace 50f w/player_constants.minXHairDifference
-            if (Vector3.Distance(player1XHair.position, player2XHair.position) < 50f)
+            if (Vector3.Distance(player1XHair.position, player2XHair.position) < Manager.constants.minXHairDifference)
             {
                 if (isP1Firing)
                 {
@@ -150,6 +151,10 @@ public class PlayerShooting : MonoBehaviour
                 isInCover = false;
                 //playerHealth.SetCoverStatus(isInCover);
 
+                playerHealth.SetCoverStatus(isInCover);
+                if (!isCoverCoroutineRunning)
+                    StartCoroutine(ChangeCover(isInCover));
+
                 //do successful cover stuff here
                 StopCoroutine(setP2CoverUp);
                 isP2Cover = false;
@@ -167,6 +172,10 @@ public class PlayerShooting : MonoBehaviour
                 isInCover = true;
                 //playerHealth.SetCoverStatus(isInCover);
 
+                playerHealth.SetCoverStatus(isInCover);
+                if (!isCoverCoroutineRunning)
+                    StartCoroutine(ChangeCover(isInCover));
+
                 //do successful cover stuff here
                 StopCoroutine(setP2CoverDown);
                 hitscan.Reload();
@@ -177,8 +186,6 @@ public class PlayerShooting : MonoBehaviour
                 setP1CoverDown = StartCoroutine(SetP1Cover());
             }
         }
-
-        playerHealth.SetCoverStatus(isInCover);
     }
 
     public void CoverP2()
@@ -191,6 +198,10 @@ public class PlayerShooting : MonoBehaviour
                 //Debug.Log("p2: successful cover press");
                 isInCover = false;
                 //playerHealth.SetCoverStatus(isInCover);
+
+                playerHealth.SetCoverStatus(isInCover);
+                if (!isCoverCoroutineRunning)
+                    StartCoroutine(ChangeCover(isInCover));
 
                 //do successful cover stuff here
                 StopCoroutine(setP1CoverUp);
@@ -209,6 +220,10 @@ public class PlayerShooting : MonoBehaviour
                 isInCover = true;
                 //playerHealth.SetCoverStatus(isInCover);
 
+                playerHealth.SetCoverStatus(isInCover);
+                if (!isCoverCoroutineRunning)
+                    StartCoroutine(ChangeCover(isInCover));
+
                 //do successful cover stuff here
                 hitscan.Reload();
                 StopCoroutine(setP1CoverDown);
@@ -219,14 +234,12 @@ public class PlayerShooting : MonoBehaviour
                 setP2CoverDown = StartCoroutine(SetP2Cover());
             }
         }
-
-        playerHealth.SetCoverStatus(isInCover);
     }
 
     IEnumerator SetP1Firing()
     {
         isP1Firing = true;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(Manager.constants.maxFireInterval);
         isP1Firing = false;
 
         if (!isP2Firing)
@@ -238,7 +251,7 @@ public class PlayerShooting : MonoBehaviour
     IEnumerator SetP2Firing()
     {
         isP2Firing = true;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(Manager.constants.maxFireInterval);
         isP2Firing = false;
 
         if (!isP1Firing)
@@ -250,7 +263,7 @@ public class PlayerShooting : MonoBehaviour
     IEnumerator SetP1Cover()
     {
         isP1Cover = true;
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(Manager.constants.maxCoverInterval);
         isP1Cover = false;
 
         if (!isP2Cover)
@@ -269,6 +282,26 @@ public class PlayerShooting : MonoBehaviour
         {
             Debug.Log("player 1 failed to press cover in time");
         }
+    }
+
+    IEnumerator ChangeCover(bool newCoverState)
+    {
+        isCoverCoroutineRunning = true;
+        //newCoverState = false is out of cover
+        Vector3 currentPosition = transform.position;
+        Vector3 destination = !newCoverState ? transform.position + coverOffset : transform.position - coverOffset;
+
+        float transitionTimer = 0;
+
+        while (transitionTimer < 1f)
+        {
+            transform.position = Vector3.Lerp(currentPosition, destination, transitionTimer / 1f);
+            transitionTimer += Time.deltaTime * Manager.constants.coverStateChangeSpeed;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        isCoverCoroutineRunning = false;
+        yield return null;
     }
 
     Vector3 FindMidpoint(Vector3 a, Vector3 b)
