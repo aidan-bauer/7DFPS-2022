@@ -32,8 +32,6 @@ public class PlayerShooting : MonoBehaviour
     Coroutine setP1Firing, setP2Firing;
     Coroutine setP1CoverUp, setP2CoverUp;
     Coroutine setP1CoverDown, setP2CoverDown;
-    Coroutine cover;
-    bool isCoverCoroutineRunning = false;
 
     public static Action<Vector3> OnFire;
     public static Action onReload;

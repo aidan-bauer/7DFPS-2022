@@ -25,6 +25,8 @@ public class EnemyShooting : MonoBehaviour
     Animator anim;
     GameObject player;
 
+    [HideInInspector] public Coroutine shotTimer, startDelay;
+
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -63,7 +65,7 @@ public class EnemyShooting : MonoBehaviour
         currentAmmo = gunData.ammoBeforeReload;
         outOfAmmo = false;
         enemyHealth.SetCoverStatus(false);
-        StartCoroutine(StartDelay());
+        startDelay = StartCoroutine(StartDelay());
 
         if (onWeaponReload != null)
         {
@@ -104,7 +106,7 @@ public class EnemyShooting : MonoBehaviour
             nomralShot.Play();
         }
 
-        StartCoroutine(ShotTiming());
+        shotTimer = StartCoroutine(ShotTiming());
 
         if (onWeaponFired != null)
         {
@@ -115,14 +117,13 @@ public class EnemyShooting : MonoBehaviour
     public void Activate()
     {
         gameObject.SetActive(true);
-        //StartCoroutine(StartDelay());
         Reload();
     }
 
     IEnumerator StartDelay()
     {
         yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, maxStartDelay));
-        StartCoroutine(ShotTiming());
+        shotTimer = StartCoroutine(ShotTiming());
     }
 
     IEnumerator ShotTiming()
@@ -142,6 +143,11 @@ public class EnemyShooting : MonoBehaviour
 
     public void OnDeath(Health health)
     {
-        anim.SetTrigger("isDead");
+        StopCoroutine(shotTimer);
+        StopCoroutine(startDelay);
+        //reset all animations then play death animation
+        anim.Rebind();
+        anim.SetTrigger("onDeath");
+        //anim.Play("death");
     }
 }

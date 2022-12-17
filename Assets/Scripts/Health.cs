@@ -62,6 +62,11 @@ public class Health : MonoBehaviour, IDamagable
         if (!transform.CompareTag("Player"))
         {
             ScoreManager.ScoreChange.Invoke(10);
+            //GetComponent<Animator>().Play("death");
+            foreach (Collider col in GetComponentsInChildren<Collider>())
+            {
+                col.enabled = false;
+            }
         }
     }
 }
