@@ -60,7 +60,7 @@ public class AmmoUI : MonoBehaviour
 
     private void UpdateGunData(GunData newData)
     {
-        Debug.Log("update gun data");
+        //Debug.Log("update gun data");
         gunData = newData;
         gunImage.sprite = gunData.gunImage;
         ammoImage.sprite = gunData.ammoImage;
@@ -71,7 +71,7 @@ public class AmmoUI : MonoBehaviour
 
     private void UpdateAmmo(int currentAmmo)
     {
-        Debug.Log("Update Ammo: " + currentAmmo.ToString());
+        //Debug.Log("Update Ammo: " + currentAmmo.ToString());
         ammoRemaining.text = currentAmmo.ToString();
     }
 }

@@ -10,6 +10,7 @@ public class PauseManager : MonoBehaviour
     InputHandler inputHandler;
 
     public GameObject pauseMenu;
+    [SerializeField] bool displayPause;
     static bool isPaused = false;
 
     public static bool IsPaused
@@ -40,6 +41,11 @@ public class PauseManager : MonoBehaviour
     {
         //isPaused = true;
         //SetTimeScale(isPaused);     //lock the cursor when level loads
+    }
+
+    private void Update()
+    {
+        displayPause = isPaused;
     }
 
     void SetPause()

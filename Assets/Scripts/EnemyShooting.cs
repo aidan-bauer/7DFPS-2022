@@ -22,24 +22,25 @@ public class EnemyShooting : MonoBehaviour
     public event Action<int> onWeaponFired;
 
     Health enemyHealth;
-
+    Animator anim;
     GameObject player;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        anim = GetComponent<Animator>();
 
         enemyHealth = GetComponent<Health>();
     }
 
     private void OnEnable()
     {
-        
+        enemyHealth.onDeath += OnDeath;
     }
 
     private void OnDisable()
     {
-        
+        enemyHealth.onDeath -= OnDeath;
     }
 
     // Start is called before the first frame update
@@ -93,9 +94,10 @@ public class EnemyShooting : MonoBehaviour
             IDamagable damagable = player.GetComponent<IDamagable>();
             if (damagable != null)
             {
-                Debug.Log("damanging player");
+                //Debug.Log("damanging player");
                 damagable.TakeDamage(gunData.damage);
             }
+            anim.Rebind();
             damageShot.Play();
         } else
         {
@@ -131,9 +133,15 @@ public class EnemyShooting : MonoBehaviour
         if (currentAmmo == 1)
         {
             //play warning sign for damaging shot
+            anim.Play("warning");
         }
 
         yield return new WaitForSeconds(interval);
         Shoot();
+    }
+
+    public void OnDeath(Health health)
+    {
+        anim.SetTrigger("isDead");
     }
 }

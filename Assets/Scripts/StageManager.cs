@@ -81,7 +81,7 @@ public class StageManager : MonoBehaviour
             {
                 GameObject toDelete = enemies[stage][enemies[stage].IndexOf(enemyToRemove)].gameObject;
                 enemies[stage].Remove(enemyToRemove);
-                Destroy(toDelete);
+                //Destroy(toDelete);
 
                 //if all enemies are eliminated, move to the next stage
                 if (enemies[stage].Count == 0)

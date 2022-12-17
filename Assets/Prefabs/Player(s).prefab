@@ -716,10 +716,9 @@ GameObject:
   - component: {fileID: 7798226650480799984}
   - component: {fileID: 7798226650480799986}
   - component: {fileID: 5957858514263766763}
-  - component: {fileID: 7798226650449783956}
   - component: {fileID: 7798226650449783955}
   - component: {fileID: 7798226650449783960}
-  - component: {fileID: 1552929037}
+  - component: {fileID: 347110392}
   m_Layer: 0
   m_Name: Player(s)
   m_TagString: Player
@@ -762,6 +761,9 @@ MonoBehaviour:
   player2XHair: {fileID: 7798226648936038698}
   p1XHairSensitivity: 1
   p2XHairSensitivity: 1
+  coverOffset: {x: 0, y: 0.5, z: 0}
+  lerpPos: {x: 0, y: 0, z: 0}
+  coverProgress: 0
   isP1Firing: 0
   isP2Firing: 0
   isInCover: 1
@@ -794,21 +796,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inCover: 1
   maxHealth: 100
---- !u!111 &7798226650449783956
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7798226650480799985}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!136 &7798226650449783955
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -839,26 +826,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!95 &1552929037
-Animator:
-  serializedVersion: 4
+--- !u!111 &347110392
+Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7798226650480799985}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 60122b8cb2a58b247bf53ca0df6422b2, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 5336ee90acb1fe447a9b2c4e8f8b6da6, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 5336ee90acb1fe447a9b2c4e8f8b6da6, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &8810774334472111508
 PrefabInstance:
   m_ObjectHideFlags: 0

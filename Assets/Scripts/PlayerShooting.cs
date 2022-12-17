@@ -12,7 +12,10 @@ public class PlayerShooting : MonoBehaviour
     [Range(0f, 2f)]
     [SerializeField] float p2XHairSensitivity = 1f;
     [SerializeField] Vector3 coverOffset = Vector3.up;
-    Vector3 inCoverPos, outCoverPos;
+    Vector3 inCoverPos, outCoverPos/*, startingPlayerPos*/;
+    [SerializeField] Vector3 lerpPos;
+    [SerializeField] float coverProgress = 0;   //0 = in cover, 1 = out of cover
+    float coverTransitionTimer = 0;
     Vector2 p1XHairPos, p2XHairPos;
 
     InputHandler inputHandler;
@@ -88,10 +91,36 @@ public class PlayerShooting : MonoBehaviour
 
             player1XHair.position = p1XHairPos;
             player2XHair.position = p2XHairPos;
+        }
+    }
 
-            if (isInCover)
+    private void FixedUpdate()
+    {
+        if (!PauseManager.IsPaused)
+        {
+            if (!isInCover)
             {
-
+                if (coverTransitionTimer < 1f)
+                {
+                    //Debug.Log("advancing");
+                    coverTransitionTimer += Time.fixedDeltaTime * Manager.constants.coverStateChangeSpeed;
+                    //coverProgress = Mathf.Clamp01(coverTransitionTimer / 1f);
+                    coverProgress = coverTransitionTimer / 1f;
+                    lerpPos = Vector3.Lerp(inCoverPos, outCoverPos, coverProgress);
+                    transform.position = Vector3.Lerp(inCoverPos, outCoverPos, coverProgress);
+                }
+            }
+            else
+            {
+                if (coverTransitionTimer > 0f)
+                {
+                    //Debug.Log("retreating");
+                    coverTransitionTimer -= Time.fixedDeltaTime * Manager.constants.coverStateChangeSpeed;
+                    //coverProgress = Mathf.Clamp01(coverTransitionTimer / 1f);
+                    coverProgress = coverTransitionTimer / 1f;
+                    lerpPos = Vector3.Lerp(inCoverPos, outCoverPos, coverProgress);
+                    transform.position = Vector3.Lerp(inCoverPos, outCoverPos, coverProgress);
+                }
             }
         }
     }
@@ -159,17 +188,8 @@ public class PlayerShooting : MonoBehaviour
             {
                 //Debug.Log("p1: successful cover press");
                 isInCover = false;
-                //playerHealth.SetCoverStatus(isInCover);
 
                 playerHealth.SetCoverStatus(isInCover);
-
-                if (!isCoverCoroutineRunning)
-                    cover = StartCoroutine(ChangeCover(isInCover));
-                else
-                {
-                    StopCoroutine(cover);
-                    cover = StartCoroutine(ChangeCover(isInCover));
-                }
 
                 //do successful cover stuff here
                 StopCoroutine(setP2CoverUp);
@@ -186,17 +206,8 @@ public class PlayerShooting : MonoBehaviour
             {
                 //Debug.Log("p1: successful cover release");
                 isInCover = true;
-                //playerHealth.SetCoverStatus(isInCover);
 
                 playerHealth.SetCoverStatus(isInCover);
-
-                if (!isCoverCoroutineRunning)
-                    cover = StartCoroutine(ChangeCover(isInCover));
-                else
-                {
-                    StopCoroutine(cover);
-                    cover = StartCoroutine(ChangeCover(isInCover));
-                }
 
                 //do successful cover stuff here
                 StopCoroutine(setP2CoverDown);
@@ -219,17 +230,8 @@ public class PlayerShooting : MonoBehaviour
             {
                 //Debug.Log("p2: successful cover press");
                 isInCover = false;
-                //playerHealth.SetCoverStatus(isInCover);
 
                 playerHealth.SetCoverStatus(isInCover);
-
-                if (!isCoverCoroutineRunning)
-                    cover = StartCoroutine(ChangeCover(isInCover));
-                else
-                {
-                    StopCoroutine(cover);
-                    cover = StartCoroutine(ChangeCover(isInCover));
-                }
 
                 //do successful cover stuff here
                 StopCoroutine(setP1CoverUp);
@@ -246,17 +248,8 @@ public class PlayerShooting : MonoBehaviour
             {
                 //Debug.Log("p2: successful cover release");
                 isInCover = true;
-                //playerHealth.SetCoverStatus(isInCover);
 
                 playerHealth.SetCoverStatus(isInCover);
-
-                if (!isCoverCoroutineRunning)
-                    cover = StartCoroutine(ChangeCover(isInCover));
-                else
-                {
-                    StopCoroutine(cover);
-                    cover = StartCoroutine(ChangeCover(isInCover));
-                }
 
                 //do successful cover stuff here
                 hitscan.Reload();
@@ -316,24 +309,6 @@ public class PlayerShooting : MonoBehaviour
         {
             Debug.Log("player 1 failed to press cover in time");
         }
-    }
-
-    IEnumerator ChangeCover(bool newCoverState)
-    {
-        isCoverCoroutineRunning = true;
-        Vector3 currentPos = transform.position;
-
-        float transitionTimer = 0;
-
-        while (transitionTimer < 1f)
-        {
-            transform.position = !newCoverState ? Vector3.Lerp(inCoverPos, outCoverPos, transitionTimer / 1f) : Vector3.Lerp(outCoverPos, inCoverPos, transitionTimer / 1f);
-            transitionTimer += Time.deltaTime * Manager.constants.coverStateChangeSpeed;
-            yield return new WaitForSeconds(Time.deltaTime);
-        }
-
-        isCoverCoroutineRunning = false;
-        yield return null;
     }
 
     public void SetPlayerCoverPos(int stage)
