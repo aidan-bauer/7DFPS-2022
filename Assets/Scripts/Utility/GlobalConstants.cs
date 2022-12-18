@@ -12,5 +12,8 @@ public class GlobalConstants : ScriptableObject
     public float firePressDuration = 0.3f;
     public float coverStateChangeSpeed = 2.5f;
     public float endofLevelDelay = 2f;
+    public float maxAimSensitivity = 2f;
+    public float minVolume = -80f;
+    public float maxVolume = 20f;
 
 }

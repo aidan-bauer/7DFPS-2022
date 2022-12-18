@@ -12,18 +12,22 @@ public class SettingsMenu : MonoBehaviour
 
     
 
-    public event Action<float> onSensitivityChanged;
+    public static event Action<float> onP1SensitivityChanged;
+    public static event Action<float> onP2SensitivityChanged;
 
-    private void OnEnable()
+    public void UpdateP1Sensitivity(float sensitivity)
     {
-        onSensitivityChanged += UpdateSensitivity;   
+        if(onP1SensitivityChanged != null)
+        {
+            onP1SensitivityChanged.Invoke(sensitivity);
+        }
     }
 
-    public void UpdateSensitivity(float sensitivity)
+    public void UpdateP2Sensitivity(float sensitivity)
     {
-        if(onSensitivityChanged != null)
+        if (onP2SensitivityChanged != null)
         {
-            onSensitivityChanged.Invoke(sensitivity);
+            onP2SensitivityChanged.Invoke(sensitivity);
         }
     }
 }

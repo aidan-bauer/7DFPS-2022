@@ -22,10 +22,11 @@ public class PlayerShooting : MonoBehaviour
     InputHandler inputHandler;
     SimpleHitscan hitscan;
     Health playerHealth;
+    
 
     float screenXMin, screenXMax, screenYMin, screenYMax;
 
-    public bool isP1Firing, isP2Firing;
+    bool isP1Firing, isP2Firing;
     bool isP1Cover, isP2Cover;
     bool isP1CoverPressed = false, isP2CoverPressed = false;
     [SerializeField] bool isInCover = true;
@@ -42,6 +43,9 @@ public class PlayerShooting : MonoBehaviour
         inputHandler = FindObjectOfType<InputHandler>();
         hitscan = GetComponent<SimpleHitscan>();
         playerHealth = GetComponent<Health>();
+
+        p1XHairSensitivity = PlayerPrefs.GetFloat("player1Sens", 1f);
+        p2XHairSensitivity = PlayerPrefs.GetFloat("player2Sens", 1f);
     }
 
     // Start is called before the first frame update

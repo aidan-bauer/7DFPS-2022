@@ -33,10 +33,10 @@ public class StageManager : MonoBehaviour
             enemies[stageIndex].AddRange(enemiesInStage);
             stageIndex++;
 
-            foreach (Health enemy in enemiesInStage)
+            /*foreach (Health enemy in enemiesInStage)
             {
                 enemy.gameObject.SetActive(false);
-            }
+            }*/
         }
     }
 
@@ -131,7 +131,6 @@ public class StageManager : MonoBehaviour
             {
                 callback.Invoke();
                 transitionOver = true;
-                //yield return null;
                 yield break;
             }
 

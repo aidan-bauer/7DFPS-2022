@@ -6,7 +6,7 @@ using UnityEngine;
 public class SimpleHitscan : MonoBehaviour, IGun
 {
     [Header("Object References")]
-    [SerializeField] Camera maineCamera;
+    Camera mainCamera;
     [SerializeField] GunData gunData;
 
 
@@ -19,14 +19,18 @@ public class SimpleHitscan : MonoBehaviour, IGun
     public event Action<GunData> onWeaponEquip;
 
     AudioSource source;
+    ParticleSystem system;
 
     private void Awake()
     {
         source = GetComponent<AudioSource>();
+        system = GetComponentInChildren<ParticleSystem>();
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
     private void Start()
     {
+        Equip();
         Reload();
     }
 
@@ -81,7 +85,7 @@ public class SimpleHitscan : MonoBehaviour, IGun
 
         currentAmmo--;
 
-        Ray ray = maineCamera.ScreenPointToRay(fireLocation);
+        Ray ray = mainCamera.ScreenPointToRay(fireLocation);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit))
@@ -98,7 +102,10 @@ public class SimpleHitscan : MonoBehaviour, IGun
             source.PlayOneShot(gunData.fireSoundEffect);
         }
 
-        if(onWeaponFired != null)
+        system.transform.LookAt(ray.origin + ray.direction);
+        system.Play();
+
+        if (onWeaponFired != null)
         {
             onWeaponFired.Invoke(currentAmmo);
         }

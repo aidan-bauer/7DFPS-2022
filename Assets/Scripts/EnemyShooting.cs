@@ -15,7 +15,6 @@ public class EnemyShooting : MonoBehaviour
     [SerializeField] ParticleSystem damageShot;
     [SerializeField] GunData gunData;
 
-    [SerializeField] bool onCeiling = false;
     [SerializeField] float damageTimeVariation = 0.25f;
     [SerializeField] float maxStartDelay = 2f;
 
@@ -140,6 +139,27 @@ public class EnemyShooting : MonoBehaviour
     public void Activate()
     {
         gameObject.SetActive(true);
+
+        Vector3 lookVector = Vector3.zero;
+
+        switch (orientation)
+        {
+            case PlayerOrientation.Up:
+                lookVector = Vector3.up;
+                break;
+            case PlayerOrientation.Down:
+                lookVector = Vector3.down;
+                break;
+            case PlayerOrientation.Right:
+                lookVector = Vector3.right;
+                break;
+            case PlayerOrientation.Left:
+                lookVector = Vector3.left;
+                break;
+        }
+
+        transform.GetChild(0).LookAt(player.transform.position, lookVector);
+
         Reload();
     }
 

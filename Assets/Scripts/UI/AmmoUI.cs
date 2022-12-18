@@ -25,7 +25,6 @@ public class AmmoUI : MonoBehaviour
         if(hitscan == null)
         {
             hitscan = GameObject.FindGameObjectWithTag("Player").GetComponent<SimpleHitscan>();
-
         }
         hitscan.onWeaponEquip += UpdateCurrentWeapon;
     }

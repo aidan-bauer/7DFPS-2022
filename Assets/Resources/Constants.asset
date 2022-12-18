@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175a123a8aaef22468cf2ad3858374a6, type: 3}
   m_Name: Constants
   m_EditorClassIdentifier: 
-  minXHairDifference: 50
+  minXHairDifference: 75
   maxFireInterval: 0.5
   maxCoverInterval: 0.75
   firePressDuration: 0.3
+  coverStateChangeSpeed: 2.5
+  endofLevelDelay: 2
+  maxAimSensitivity: 2
+  minVolume: -80
+  maxVolume: 20

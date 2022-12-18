@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, IDamagable
 {
+    [SerializeField] AudioClip hurtSFX;
     public bool inCover = true;
     [SerializeField] private int maxHealth = 100;
+    [SerializeField] int score = 10;
     public int currentHealth { get; private set; }
 
     public event Action<int> onTakeDamage;
     public event Action<Health> onDeath;
 
+    AudioSource source;
+
     private void Awake()
     {
+        source = GetComponent<AudioSource>();
+
         currentHealth = maxHealth;
     }
 
@@ -37,6 +43,7 @@ public class Health : MonoBehaviour, IDamagable
 
                 if (onTakeDamage != null)
                 {
+                    source.PlayOneShot(hurtSFX);
                     onTakeDamage.Invoke(damage);
                 }
             }
@@ -61,8 +68,8 @@ public class Health : MonoBehaviour, IDamagable
         //Debug.Log(health.gameObject.name + " is deded");
         if (!transform.CompareTag("Player"))
         {
-            ScoreManager.ScoreChange.Invoke(10);
-            //GetComponent<Animator>().Play("death");
+            ScoreManager.ScoreChange.Invoke(score);
+
             foreach (Collider col in GetComponentsInChildren<Collider>())
             {
                 col.enabled = false;

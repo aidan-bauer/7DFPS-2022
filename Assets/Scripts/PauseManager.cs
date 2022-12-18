@@ -40,7 +40,8 @@ public class PauseManager : MonoBehaviour
     void Start()
     {
         //isPaused = true;
-        //SetTimeScale(isPaused);     //lock the cursor when level loads
+        SetTimeScale(isPaused);     //lock the cursor when level loads
+        SetPauseUI(isPaused);
     }
 
     private void Update()
@@ -52,7 +53,7 @@ public class PauseManager : MonoBehaviour
     {
         isPaused = !isPaused;
         SetTimeScale(isPaused);
-        //SetPauseUI(isPaused);
+        SetPauseUI(isPaused);
     }
 
     public void SetTimeScale(bool paused)
