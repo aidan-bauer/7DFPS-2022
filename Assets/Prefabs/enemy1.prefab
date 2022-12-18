@@ -9794,6 +9794,7 @@ MonoBehaviour:
   hurtSFX: {fileID: 8300000, guid: d631c9848b7ada04e9286330cdc3b175, type: 3}
   inCover: 0
   maxHealth: 100
+  score: 10
 --- !u!114 &597642212826625301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9853,7 +9854,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 2.6936142
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

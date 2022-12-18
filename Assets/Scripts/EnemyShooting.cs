@@ -28,6 +28,7 @@ public class EnemyShooting : MonoBehaviour
     Health enemyHealth;
     Animator anim;
     GameObject player;
+    AudioSource source;
 
     [HideInInspector] public Coroutine shotTimer, startDelay;
 
@@ -35,7 +36,7 @@ public class EnemyShooting : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         anim = GetComponent<Animator>();
-
+        source = GetComponent<AudioSource>();
         enemyHealth = GetComponent<Health>();
     }
 
@@ -89,6 +90,9 @@ public class EnemyShooting : MonoBehaviour
         enemyHealth.SetCoverStatus(false);
         startDelay = StartCoroutine(StartDelay());
 
+        if (gunData.reloadSoundEffect)
+            source.PlayOneShot(gunData.reloadSoundEffect);
+
         if (onWeaponReload != null)
         {
             onWeaponReload.Invoke(currentAmmo);
@@ -128,6 +132,9 @@ public class EnemyShooting : MonoBehaviour
             nomralShot.Play();
         }
 
+        if (gunData.fireSoundEffect)
+            source.PlayOneShot(gunData.fireSoundEffect);
+
         shotTimer = StartCoroutine(ShotTiming());
 
         if (onWeaponFired != null)
@@ -138,7 +145,7 @@ public class EnemyShooting : MonoBehaviour
 
     public void Activate()
     {
-        gameObject.SetActive(true);
+        //gameObject.SetActive(true);
 
         Vector3 lookVector = Vector3.zero;
 

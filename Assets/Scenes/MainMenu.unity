@@ -134,6 +134,8 @@ GameObject:
   - component: {fileID: 63720402}
   - component: {fileID: 63720401}
   - component: {fileID: 63720400}
+  - component: {fileID: 63720404}
+  - component: {fileID: 63720405}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -180,6 +182,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &63720404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63720399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fc5e9150d91bbb42bfac52de900d668, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  picName: main_menu
+  includeTime: 1
+--- !u!114 &63720405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63720399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02680741fea07114aa927630f89900ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1CursorDelta: {x: 0, y: 0}
+  player2CursorDelta: {x: 0, y: 0}
 --- !u!1 &340998908
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,33 +582,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 845337242, guid: c672012cbe2b3a645a7134a7f4a4b4b5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 845337242, guid: c672012cbe2b3a645a7134a7f4a4b4b5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1017284057}
-    - target: {fileID: 845337242, guid: c672012cbe2b3a645a7134a7f4a4b4b5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetActive
-      objectReference: {fileID: 0}
-    - target: {fileID: 845337242, guid: c672012cbe2b3a645a7134a7f4a4b4b5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 845337242, guid: c672012cbe2b3a645a7134a7f4a4b4b5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4662512995456043023, guid: c672012cbe2b3a645a7134a7f4a4b4b5, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 296.2346
-      objectReference: {fileID: 0}
-    - target: {fileID: 4662512995456043023, guid: c672012cbe2b3a645a7134a7f4a4b4b5, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -26.5052
-      objectReference: {fileID: 0}
     - target: {fileID: 6436503015814737500, guid: c672012cbe2b3a645a7134a7f4a4b4b5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -602,18 +608,6 @@ PrefabInstance:
     - target: {fileID: 6436503017551345603, guid: c672012cbe2b3a645a7134a7f4a4b4b5, type: 3}
       propertyPath: m_Name
       value: MainMenuCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 6436503017551345629, guid: c672012cbe2b3a645a7134a7f4a4b4b5, type: 3}
-      propertyPath: m_UiScaleMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6436503017551345629, guid: c672012cbe2b3a645a7134a7f4a4b4b5, type: 3}
-      propertyPath: m_ReferenceResolution.x
-      value: 1280
-      objectReference: {fileID: 0}
-    - target: {fileID: 6436503017551345629, guid: c672012cbe2b3a645a7134a7f4a4b4b5, type: 3}
-      propertyPath: m_ReferenceResolution.y
-      value: 720
       objectReference: {fileID: 0}
     - target: {fileID: 6436503017551345631, guid: c672012cbe2b3a645a7134a7f4a4b4b5, type: 3}
       propertyPath: m_Pivot.x

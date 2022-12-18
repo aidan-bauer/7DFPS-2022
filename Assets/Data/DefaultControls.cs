@@ -62,6 +62,15 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Screenshot"",
+                    ""type"": ""Button"",
+                    ""id"": ""263933f0-561a-4d6d-b306-c06c283c2d2d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -194,6 +203,28 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bbc6ed27-7e5b-4b89-8871-251c183a4713"",
+                    ""path"": ""<Keyboard>/f12"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Screenshot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""485c94b0-8b5d-4e4f-9844-d8ade546ae56"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Screenshot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -732,6 +763,7 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
         m_Player1_P1_Aim = m_Player1.FindAction("P1_Aim", throwIfNotFound: true);
         m_Player1_P1_Fire = m_Player1.FindAction("P1_Fire", throwIfNotFound: true);
         m_Player1_Pause = m_Player1.FindAction("Pause", throwIfNotFound: true);
+        m_Player1_Screenshot = m_Player1.FindAction("Screenshot", throwIfNotFound: true);
         // Player2
         m_Player2 = asset.FindActionMap("Player2", throwIfNotFound: true);
         m_Player2_P2_ToggleCover = m_Player2.FindAction("P2_ToggleCover", throwIfNotFound: true);
@@ -810,6 +842,7 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player1_P1_Aim;
     private readonly InputAction m_Player1_P1_Fire;
     private readonly InputAction m_Player1_Pause;
+    private readonly InputAction m_Player1_Screenshot;
     public struct Player1Actions
     {
         private @DefaultControls m_Wrapper;
@@ -818,6 +851,7 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
         public InputAction @P1_Aim => m_Wrapper.m_Player1_P1_Aim;
         public InputAction @P1_Fire => m_Wrapper.m_Player1_P1_Fire;
         public InputAction @Pause => m_Wrapper.m_Player1_Pause;
+        public InputAction @Screenshot => m_Wrapper.m_Player1_Screenshot;
         public InputActionMap Get() { return m_Wrapper.m_Player1; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -839,6 +873,9 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                 @Pause.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnPause;
+                @Screenshot.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnScreenshot;
+                @Screenshot.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnScreenshot;
+                @Screenshot.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnScreenshot;
             }
             m_Wrapper.m_Player1ActionsCallbackInterface = instance;
             if (instance != null)
@@ -855,6 +892,9 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @Screenshot.started += instance.OnScreenshot;
+                @Screenshot.performed += instance.OnScreenshot;
+                @Screenshot.canceled += instance.OnScreenshot;
             }
         }
     }
@@ -1030,6 +1070,7 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
         void OnP1_Aim(InputAction.CallbackContext context);
         void OnP1_Fire(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnScreenshot(InputAction.CallbackContext context);
     }
     public interface IPlayer2Actions
     {

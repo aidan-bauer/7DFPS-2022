@@ -11,6 +11,7 @@ public class InputHandler : MonoBehaviour, DefaultControls.IPlayer1Actions, Defa
     public Vector2 player2CursorDelta;
 
     public Action Pause;
+    public Action Screenshot;
 
     public Action OnP1Cover;
     public Action OnP1Fire;
@@ -65,6 +66,14 @@ public class InputHandler : MonoBehaviour, DefaultControls.IPlayer1Actions, Defa
             return;
 
         Pause.Invoke();
+    }
+
+    public void OnScreenshot(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+            return;
+
+        Screenshot.Invoke();
     }
 
     public void OnP2_ToggleCover(InputAction.CallbackContext context)

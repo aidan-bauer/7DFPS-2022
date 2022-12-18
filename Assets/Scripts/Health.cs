@@ -74,6 +74,9 @@ public class Health : MonoBehaviour, IDamagable
             {
                 col.enabled = false;
             }
+        } else
+        {
+            GetComponent<PlayerShooting>().canPlayerShoot = false;
         }
     }
 }
