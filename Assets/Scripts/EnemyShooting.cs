@@ -6,11 +6,16 @@ using UnityEngine;
 public class EnemyShooting : MonoBehaviour
 {
 
+    [Tooltip("Quick note: Orientation here is defined as the direction the player is pointing in")]
+    public enum PlayerOrientation { Up, Down, Left, Right }
+    public PlayerOrientation orientation = PlayerOrientation.Up;
+
+
     [SerializeField] ParticleSystem nomralShot;
     [SerializeField] ParticleSystem damageShot;
     [SerializeField] GunData gunData;
 
-    //[SerializeField] float damageTime = 7f;
+    [SerializeField] bool onCeiling = false;
     [SerializeField] float damageTimeVariation = 0.25f;
     [SerializeField] float maxStartDelay = 2f;
 
@@ -48,7 +53,25 @@ public class EnemyShooting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.GetChild(0).LookAt(player.transform.position, Vector3.up);
+        Vector3 lookVector = Vector3.zero;
+
+        switch (orientation)
+        {
+            case PlayerOrientation.Up: 
+                lookVector = Vector3.up;
+                break;
+            case PlayerOrientation.Down:
+                lookVector = Vector3.down;
+                break;
+            case PlayerOrientation.Right:
+                lookVector = Vector3.right;
+                break;
+            case PlayerOrientation.Left:
+                lookVector = Vector3.left;
+                break;
+        }
+
+        transform.GetChild(0).LookAt(player.transform.position, lookVector);
     }
 
     // Update is called once per frame
@@ -147,7 +170,7 @@ public class EnemyShooting : MonoBehaviour
         StopCoroutine(startDelay);
         //reset all animations then play death animation
         anim.Rebind();
-        anim.SetTrigger("onDeath");
-        //anim.Play("death");
+        //anim.SetTrigger("onDeath");
+        anim.Play("death");
     }
 }

@@ -11,9 +11,10 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] float p1XHairSensitivity = 1f;
     [Range(0f, 2f)]
     [SerializeField] float p2XHairSensitivity = 1f;
+    public bool canPlayerShoot;
     [SerializeField] Vector3 coverOffset = Vector3.up;
-    Vector3 inCoverPos, outCoverPos/*, startingPlayerPos*/;
-    [SerializeField] Vector3 lerpPos;
+    [SerializeField] Vector3 inCoverPos, outCoverPos;
+    Vector3 lerpPos;
     [SerializeField] float coverProgress = 0;   //0 = in cover, 1 = out of cover
     float coverTransitionTimer = 0;
     Vector2 p1XHairPos, p2XHairPos;
@@ -63,6 +64,8 @@ public class PlayerShooting : MonoBehaviour
         inputHandler.OnP2Cover += CoverP2;
 
         StageManager.OnStageBegin += SetPlayerCoverPos;
+        StageManager.OnStageBegin += ChangeCanPlayerShoot;
+        StageManager.OnStageComplete += ChangeCanPlayerShoot;
     }
 
     private void OnDisable()
@@ -73,6 +76,8 @@ public class PlayerShooting : MonoBehaviour
         inputHandler.OnP2Cover -= CoverP2;
 
         StageManager.OnStageBegin -= SetPlayerCoverPos;
+        StageManager.OnStageBegin -= ChangeCanPlayerShoot;
+        StageManager.OnStageComplete -= ChangeCanPlayerShoot;
     }
 
     // Update is called once per frame
@@ -100,11 +105,8 @@ public class PlayerShooting : MonoBehaviour
             {
                 if (coverTransitionTimer < 1f)
                 {
-                    //Debug.Log("advancing");
                     coverTransitionTimer += Time.fixedDeltaTime * Manager.constants.coverStateChangeSpeed;
-                    //coverProgress = Mathf.Clamp01(coverTransitionTimer / 1f);
-                    coverProgress = coverTransitionTimer / 1f;
-                    lerpPos = Vector3.Lerp(inCoverPos, outCoverPos, coverProgress);
+                    coverProgress = Mathf.Clamp01(coverTransitionTimer / 1f);
                     transform.position = Vector3.Lerp(inCoverPos, outCoverPos, coverProgress);
                 }
             }
@@ -112,11 +114,8 @@ public class PlayerShooting : MonoBehaviour
             {
                 if (coverTransitionTimer > 0f)
                 {
-                    //Debug.Log("retreating");
                     coverTransitionTimer -= Time.fixedDeltaTime * Manager.constants.coverStateChangeSpeed;
-                    //coverProgress = Mathf.Clamp01(coverTransitionTimer / 1f);
-                    coverProgress = coverTransitionTimer / 1f;
-                    lerpPos = Vector3.Lerp(inCoverPos, outCoverPos, coverProgress);
+                    coverProgress = Mathf.Clamp01(coverTransitionTimer / 1f);
                     transform.position = Vector3.Lerp(inCoverPos, outCoverPos, coverProgress);
                 }
             }
@@ -125,7 +124,7 @@ public class PlayerShooting : MonoBehaviour
 
     public void FireP1()
     {
-        if (!isInCover)
+        if (!isInCover && canPlayerShoot)
         {
             if (Vector3.Distance(player1XHair.position, player2XHair.position) < Manager.constants.minXHairDifference)
             {
@@ -152,7 +151,7 @@ public class PlayerShooting : MonoBehaviour
 
     public void FireP2()
     {
-        if (!isInCover)
+        if (!isInCover && canPlayerShoot)
         {
             if (Vector3.Distance(player1XHair.position, player2XHair.position) < Manager.constants.minXHairDifference)
             {
@@ -180,7 +179,7 @@ public class PlayerShooting : MonoBehaviour
     public void CoverP1()
     {
         isP1CoverPressed = !isP1CoverPressed;
-        if (isInCover && isP1CoverPressed)
+        if (isInCover && isP1CoverPressed && canPlayerShoot)
         {
             if (isP2Cover)
             {
@@ -198,7 +197,7 @@ public class PlayerShooting : MonoBehaviour
                 setP1CoverUp = StartCoroutine(SetP1Cover());
             }
         }
-        else if (!isInCover && !isP1CoverPressed)
+        else if (!isInCover && !isP1CoverPressed && canPlayerShoot)
         {
             if (isP2Cover)
             {
@@ -222,7 +221,7 @@ public class PlayerShooting : MonoBehaviour
     public void CoverP2()
     {
         isP2CoverPressed = !isP2CoverPressed;
-        if (isInCover && isP2CoverPressed)
+        if (isInCover && isP2CoverPressed && canPlayerShoot)
         {
             if (isP1Cover)
             {
@@ -240,7 +239,7 @@ public class PlayerShooting : MonoBehaviour
                 setP2CoverUp = StartCoroutine(SetP2Cover());
             }
         }
-        else if (!isInCover && !isP2CoverPressed)
+        else if (!isInCover && !isP2CoverPressed && canPlayerShoot)
         {
             if (isP1Cover)
             {
@@ -321,5 +320,10 @@ public class PlayerShooting : MonoBehaviour
         Vector3 aToB = a - b;
         float mag = aToB.magnitude;
         return b + aToB.normalized * (mag / 2f);
+    }
+
+    public void ChangeCanPlayerShoot(int stage)
+    {
+        canPlayerShoot = !canPlayerShoot;
     }
 }

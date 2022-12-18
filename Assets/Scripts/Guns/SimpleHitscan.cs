@@ -6,25 +6,28 @@ using UnityEngine;
 public class SimpleHitscan : MonoBehaviour, IGun
 {
     [Header("Object References")]
-    [SerializeField] Camera camera;
-
+    [SerializeField] Camera maineCamera;
     [SerializeField] GunData gunData;
 
 
     [SerializeField] private int currentAmmo;
     public bool outOfAmmo { get; private set; }
-
     
     public event Action<int> onWeaponReload;   
     public event Action onWeaponMisfire;
     public event Action<int> onWeaponFired;
     public event Action<GunData> onWeaponEquip;
 
+    AudioSource source;
+
+    private void Awake()
+    {
+        source = GetComponent<AudioSource>();
+    }
+
     private void Start()
     {
-        Equip();
-        //onWeaponEquip.Invoke(gunData);
-        //Reload();
+        Reload();
     }
 
     public void Equip()
@@ -34,6 +37,7 @@ public class SimpleHitscan : MonoBehaviour, IGun
         if(onWeaponEquip != null)
         {
             onWeaponEquip.Invoke(gunData);
+
         }
     }
 
@@ -50,9 +54,15 @@ public class SimpleHitscan : MonoBehaviour, IGun
     {
         currentAmmo = gunData.ammoBeforeReload;
         outOfAmmo = false;
+
         if(onWeaponReload != null)
         {
             onWeaponReload.Invoke(currentAmmo);
+        }
+
+        if (gunData.reloadSoundEffect)
+        {
+            source.PlayOneShot(gunData.reloadSoundEffect);
         }
     }
 
@@ -71,7 +81,7 @@ public class SimpleHitscan : MonoBehaviour, IGun
 
         currentAmmo--;
 
-        Ray ray = camera.ScreenPointToRay(fireLocation);
+        Ray ray = maineCamera.ScreenPointToRay(fireLocation);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit))
@@ -81,6 +91,11 @@ public class SimpleHitscan : MonoBehaviour, IGun
             {
                 damagable.TakeDamage(gunData.damage);
             }
+        }
+
+        if (gunData.fireSoundEffect)
+        {
+            source.PlayOneShot(gunData.fireSoundEffect);
         }
 
         if(onWeaponFired != null)

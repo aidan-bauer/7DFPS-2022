@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22db6d2be77acdd4eb94ac3c0e45f64b, type: 3}
+  m_Name: LaserGun
+  m_EditorClassIdentifier: 
+  damage: 10
+  fireRate: 1
+  ammoBeforeReload: 15
+  fireSoundEffect: {fileID: 8300000, guid: c18fafa1f32e2e0429feb15f509fb6c4, type: 3}
+  reloadSoundEffect: {fileID: 8300000, guid: c19ef4af110a7284d8007b1ad5c7c54e, type: 3}
+  gunImage: {fileID: 21300000, guid: 9b63ffb06ab98e340884037a1aa048a3, type: 3}
+  ammoImage: {fileID: 21300000, guid: 355dee6dc412022429dcba22f1903767, type: 3}

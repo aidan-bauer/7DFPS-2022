@@ -15,7 +15,7 @@ MonoBehaviour:
   damage: 50
   fireRate: 1
   ammoBeforeReload: 12
-  fireSoundEffect: {fileID: 0}
+  fireSoundEffect: {fileID: 8300000, guid: 2c1e32c3f32c2b641b8ac0d866177eeb, type: 3}
   reloadSoundEffect: {fileID: 0}
   gunImage: {fileID: 21300000, guid: 0bdc7d64f9c78194da358f1e01bb1bbf, type: 3}
   ammoImage: {fileID: 21300000, guid: 63385a0641288ae40889654208b4e33d, type: 3}
