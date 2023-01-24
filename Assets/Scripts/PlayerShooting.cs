@@ -7,9 +7,9 @@ public class PlayerShooting : MonoBehaviour
 {
 
     [SerializeField] RectTransform player1XHair, player2XHair;
-    [Range(0f, 2f)]
+    //[Range(0f, 2)]
     [SerializeField] float p1XHairSensitivity = 1f;
-    [Range(0f, 2f)]
+    //[Range(0f, 2f)]
     [SerializeField] float p2XHairSensitivity = 1f;
     public bool canPlayerShoot;
     [SerializeField] Vector3 coverOffset = Vector3.up;
@@ -44,8 +44,9 @@ public class PlayerShooting : MonoBehaviour
         hitscan = GetComponent<SimpleHitscan>();
         playerHealth = GetComponent<Health>();
 
-        p1XHairSensitivity = PlayerPrefs.GetFloat("player1Sens", 1f);
-        p2XHairSensitivity = PlayerPrefs.GetFloat("player2Sens", 1f);
+        UpdatePlayerSensitivity();
+        //p1XHairSensitivity = PlayerPrefs.GetFloat("player1Sens", 1f);
+        //p2XHairSensitivity = PlayerPrefs.GetFloat("player2Sens", 1f);
     }
 
     // Start is called before the first frame update
@@ -329,5 +330,11 @@ public class PlayerShooting : MonoBehaviour
     public void ChangeCanPlayerShoot(int stage)
     {
         canPlayerShoot = !canPlayerShoot;
+    }
+
+    public void UpdatePlayerSensitivity ()
+    {
+        p1XHairSensitivity = PlayerPrefs.GetFloat("player1Sens", 2.5f);
+        p2XHairSensitivity = PlayerPrefs.GetFloat("player2Sens", 2.5f);
     }
 }

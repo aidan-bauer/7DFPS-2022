@@ -15,5 +15,6 @@ public class GlobalConstants : ScriptableObject
     public float maxAimSensitivity = 2f;
     public float minVolume = -80f;
     public float maxVolume = 20f;
+    public float pausedVolume = 0.5f;
 
 }

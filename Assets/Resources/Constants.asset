@@ -18,6 +18,7 @@ MonoBehaviour:
   firePressDuration: 0.3
   coverStateChangeSpeed: 2.5
   endofLevelDelay: 2
-  maxAimSensitivity: 2
+  maxAimSensitivity: 6
   minVolume: -80
   maxVolume: 20
+  pausedVolume: 0.3

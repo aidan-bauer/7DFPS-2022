@@ -54,6 +54,11 @@ public class PauseManager : MonoBehaviour
         isPaused = !isPaused;
         SetTimeScale(isPaused);
         SetPauseUI(isPaused);
+
+        if (isPaused)
+            AudioListener.volume= Manager.constants.pausedVolume;
+        else
+            AudioListener.volume= 1.0f;
     }
 
     public void SetTimeScale(bool paused)

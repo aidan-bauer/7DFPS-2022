@@ -16,16 +16,18 @@ public class Manager : MonoBehaviour
 
     private void OnEnable()
     {
-        SettingsMenu.onP1SensitivityChanged += UpdateP1Sensitivity;
-        SettingsMenu.onP2SensitivityChanged += UpdateP2Sensitivity;
-        playerHealth.onDeath += OnPlayerDeath;
+        //SettingsMenu.onP1SensitivityChanged += UpdateP1Sensitivity;
+        //SettingsMenu.onP2SensitivityChanged += UpdateP2Sensitivity;
+        if (playerHealth)
+            playerHealth.onDeath += OnPlayerDeath;
     }
 
     private void OnDisable()
     {
-        SettingsMenu.onP1SensitivityChanged -= UpdateP1Sensitivity;
-        SettingsMenu.onP2SensitivityChanged -= UpdateP2Sensitivity;
-        playerHealth.onDeath -= OnPlayerDeath;
+        //SettingsMenu.onP1SensitivityChanged -= UpdateP1Sensitivity;
+        //SettingsMenu.onP2SensitivityChanged -= UpdateP2Sensitivity;
+        if (playerHealth)
+            playerHealth.onDeath -= OnPlayerDeath;
     }
 
     private void Awake()
@@ -35,7 +37,8 @@ public class Manager : MonoBehaviour
             constants = Resources.Load<GlobalConstants>("Constants");
         }
 
-        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+        if (GameObject.FindGameObjectWithTag("Player"))
+            playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
     }
 
     void UpdateP1Sensitivity(float sensitivity)
