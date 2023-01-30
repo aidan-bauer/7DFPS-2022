@@ -20,6 +20,8 @@ public class Health : MonoBehaviour, IDamagable
         source = GetComponent<AudioSource>();
 
         currentHealth = maxHealth;
+
+
     }
 
     private void OnEnable()

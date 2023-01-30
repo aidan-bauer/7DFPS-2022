@@ -54,7 +54,7 @@ public class SettingsMenu : MonoBehaviour
     public void UpdateSensitivityUI()
     {
         Debug.Log("updated sense from prefs");
-        Player1Sensitivity.value = PlayerPrefs.GetFloat("player1Sens", 2.5f);
-        Player2Sensitivity.value = PlayerPrefs.GetFloat("player2Sens", 2.5f);
+        Player1Sensitivity.value = PlayerPrefs.GetFloat("player1Sens", Manager.constants.maxAimSensitivity / 2f);
+        Player2Sensitivity.value = PlayerPrefs.GetFloat("player2Sens", Manager.constants.maxAimSensitivity / 2f);
     }
 }

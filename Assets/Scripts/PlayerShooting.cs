@@ -334,7 +334,7 @@ public class PlayerShooting : MonoBehaviour
 
     public void UpdatePlayerSensitivity ()
     {
-        p1XHairSensitivity = PlayerPrefs.GetFloat("player1Sens", 2.5f);
-        p2XHairSensitivity = PlayerPrefs.GetFloat("player2Sens", 2.5f);
+        p1XHairSensitivity = PlayerPrefs.GetFloat("player1Sens", Manager.constants.maxAimSensitivity/2f);
+        p2XHairSensitivity = PlayerPrefs.GetFloat("player2Sens", Manager.constants.maxAimSensitivity / 2f);
     }
 }
